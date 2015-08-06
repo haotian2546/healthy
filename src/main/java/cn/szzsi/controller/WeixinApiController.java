@@ -5,6 +5,11 @@ import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 
 public class WeixinApiController extends ApiController {
+
+
+	public void index(){
+		renderText("haha");
+	}
 	
 	/**
 	 * 如果要支持多公众账号，只需要在此返回各个公众号对应的  ApiConfig 对象即可

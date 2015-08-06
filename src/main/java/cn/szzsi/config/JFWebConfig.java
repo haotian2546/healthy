@@ -1,9 +1,12 @@
 package cn.szzsi.config;
 
+import cn.szzsi.controller.CustomerController;
+import cn.szzsi.controller.OrderController;
 import cn.szzsi.controller.WeixinApiController;
 import cn.szzsi.controller.WeixinMsgController;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
+import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
@@ -27,7 +30,9 @@ public class JFWebConfig extends JFinalConfig{
     @Override
     public void configRoute(Routes me){
         me.add("/msg", WeixinMsgController.class);
-        me.add("/api", WeixinApiController.class, "/api");
+        me.add("/api", WeixinApiController.class);
+        me.add("/cus", CustomerController.class);
+        me.add("/order", OrderController.class);
     }
 
     public void configPlugin(Plugins me){
@@ -39,6 +44,7 @@ public class JFWebConfig extends JFinalConfig{
         arp.addMapping("consulter",Consulter.class);
         arp.addMapping("consulter_order",Order.class);
         arp.addMapping("customer",Customer.class);
+        arp.addMapping("message",Message.class);
 
     }
 
