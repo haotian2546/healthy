@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal-weixin</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 

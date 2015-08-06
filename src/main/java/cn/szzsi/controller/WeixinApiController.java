@@ -1,4 +1,4 @@
-package com.jfinal.weixin.demo;
+package cn.szzsi.controller;
 
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
