@@ -5,9 +5,11 @@ import cn.szzsi.dto.OrderDto;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
+import cn.szzsi.util.CustomApi;
 import cn.szzsi.util.SessionUtil;
-import cn.szzsi.util.WeixinUtil;
-import com.jfinal.core.Controller;
+import com.jfinal.kit.PropKit;
+import com.jfinal.weixin.sdk.api.ApiConfig;
+import com.jfinal.weixin.sdk.jfinal.ApiController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,18 @@ import java.util.List;
 /**
  * Created by Yishe on 8/6/2015.
  */
-public class OrderController extends Controller{
+public class OrderController extends ApiController{
+
+    @Override
+    public ApiConfig getApiConfig(){
+        ApiConfig ac = new ApiConfig();
+        ac.setToken(PropKit.get("token"));
+        ac.setAppId(PropKit.get("appId"));
+        ac.setAppSecret(PropKit.get("appSecret"));
+        ac.setEncryptMessage(PropKit.getBoolean("encryptMessage", false));
+        ac.setEncodingAesKey(PropKit.get("encodingAesKey", "setting it in config file"));
+        return ac;
+    }
 
     /**
      * 获取大厅未服务订单
@@ -58,7 +71,7 @@ public class OrderController extends Controller{
         if(customerId.equals(order.getInt("customer_id"))){
             Message message = Message.createCustomerMessage(order,content);
             Consulter consulter = order.getConsulter();
-            WeixinUtil.sendMsg(consulter,message);
+            CustomApi.sendMsg(consulter,message);
             renderJson(Msg.SUCCESS);
         }else{
             renderJson(Msg.fail(1,"参数错误"));
