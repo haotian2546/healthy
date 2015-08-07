@@ -16,7 +16,7 @@ public class Customer extends Model<Customer>{
         return dao.findFirst("select * from customer where username=?",username);
     }
 
-    public static final Customer register(String username,String password,String nickname){
+    public static final Customer register(String username,String password,String nickname,String headurl,String memo,String department,int location){
         Customer temp = null;
         synchronized(Customer.class){
             if(!isExist(username)){
@@ -24,7 +24,7 @@ public class Customer extends Model<Customer>{
                 temp.set("username",username);
                 temp.set("password",password);
                 temp.set("nickname",nickname);
-                temp.set("location",0);
+                temp.set("location",location);
                 temp.set("Integral",0);
                 temp.set("online",0);
                 temp.save();

@@ -1,7 +1,9 @@
 package cn.szzsi.model;
 
-import cn.szzsi.hx.HuanxinUtil;
+import cn.szzsi.util.HuanxinUtil;
 import com.jfinal.plugin.activerecord.Model;
+
+import java.util.List;
 
 /**
  * Created by Yishe on 8/5/2015.
@@ -35,6 +37,10 @@ public class Order extends Model<Order>{
         return order;
     }
 
+    public Consulter getConsulter(){
+        return Consulter.dao.findById(getInt("consulter_id"));
+    }
+
     public Customer getCustomer(){
         Customer customer = null;
         Integer id = getInt("customer_id");
@@ -42,5 +48,9 @@ public class Order extends Model<Order>{
             customer = Customer.dao.findById(id);
         }
         return customer;
+    }
+
+    public static final List<Order> getUnserverOrder(){
+        return dao.find("select * from consulter_order where server_status=0");
     }
 }

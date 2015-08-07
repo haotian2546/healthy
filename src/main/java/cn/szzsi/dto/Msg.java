@@ -10,21 +10,24 @@ public class Msg{
     private boolean success;
     private int code;
     private String desc;
+    private Object data;
 
     public Msg(boolean success,int code){
-        this.success = success;
-        this.code = code;
+        this(success,code,null);
     }
 
     public Msg(boolean success,int code,String desc){
+        this(success,code,desc,null);
+    }
+
+    public Msg(boolean success,int code,String desc,Object data){
         this.success = success;
         this.code = code;
         this.desc = desc;
+        this.data = data;
     }
 
-    public static final Msg success(String desc){
-        return new Msg(true,0,desc);
-    }
+
 
     public boolean isSuccess(){
         return success;
@@ -48,5 +51,21 @@ public class Msg{
 
     public void setDesc(String desc){
         this.desc = desc;
+    }
+
+    public Object getData(){
+        return data;
+    }
+
+    public void setData(Object data){
+        this.data = data;
+    }
+
+    public static final Msg success(Object data){
+        return new Msg(true,0,null,data);
+    }
+
+    public static final Msg fail(int code,String desc){
+        return new Msg(false,code,desc);
     }
 }

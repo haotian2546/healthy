@@ -18,4 +18,25 @@ public class Message extends Model<Message>{
         message.save();
         return message;
     }
+
+    public static final Message createCustomerMessage(Order order,String content){
+        Message message = new Message();
+        message.set("order_id",order.getInt("id"));
+        message.set("sender_id",order.getInt("customer_id"));
+        message.set("sender_type",1);
+        message.set("create_time",System.currentTimeMillis());
+        message.set("content",content);
+        message.save();
+        return message;
+    }
+
+    public static final String getOrderDesc(int orderId){
+        Message message = dao.findFirst("select * from message where order_id=? and sender_type=0 order by create_time asc",orderId);
+        if(message != null){
+            return message.getStr("content");
+        }
+        return null;
+    }
+
+
 }

@@ -6,7 +6,7 @@
 
 package cn.szzsi.controller;
 
-import cn.szzsi.hx.HuanxinUtil;
+import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
@@ -56,7 +56,7 @@ public class WeixinMsgController extends MsgController{
         Message message = Message.createConsulterMessage(order,inTextMsg.getContent());
         Customer customer = order.getCustomer();
         if(customer != null){
-            HuanxinUtil.send(customer,message);
+            HuanxinUtil.sendMsg(customer,message);
         }
         renderText("");
     }

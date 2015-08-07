@@ -1,6 +1,7 @@
 package cn.szzsi.controller;
 
 import cn.szzsi.dto.Msg;
+import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.model.Customer;
 import com.jfinal.core.Controller;
 
@@ -19,8 +20,9 @@ public class CustomerController extends Controller{
         String headurl = getPara("headurl");
         String memo = getPara("memo");
         String department = getPara("department");
-        int location = getParaToInt("location");
-//        Customer.register(username,password,nickname,headurl,memo);
+        int location = getParaToInt("location",Integer.valueOf(0));
+        Customer customer = Customer.register(username,password,nickname,headurl,memo,department,location);
+        HuanxinUtil.register(customer);
         renderJson(Msg.SUCCESS);
     }
 
