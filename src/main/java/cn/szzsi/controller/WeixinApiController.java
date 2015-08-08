@@ -1,5 +1,7 @@
 package cn.szzsi.controller;
 
+import cn.szzsi.intercept.AuthInterceptor;
+import com.jfinal.aop.Before;
 import com.jfinal.kit.PropKit;
 import com.jfinal.weixin.sdk.api.*;
 import com.jfinal.weixin.sdk.jfinal.ApiController;

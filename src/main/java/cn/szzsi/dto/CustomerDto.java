@@ -12,8 +12,10 @@ public class CustomerDto{
     private int location;
 
     public CustomerDto(Customer customer){
-
-
+        this.id = customer.getInt("id");
+        this.username = customer.getStr("username");
+        this.nickname = customer.getStr("nickname");
+        this.location = customer.getInt("location");
     }
 
     public int getId(){

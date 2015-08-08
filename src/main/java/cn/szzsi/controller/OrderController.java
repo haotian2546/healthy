@@ -21,13 +21,7 @@ public class OrderController extends ApiController{
 
     @Override
     public ApiConfig getApiConfig(){
-        ApiConfig ac = new ApiConfig();
-        ac.setToken(PropKit.get("token"));
-        ac.setAppId(PropKit.get("appId"));
-        ac.setAppSecret(PropKit.get("appSecret"));
-        ac.setEncryptMessage(PropKit.getBoolean("encryptMessage", false));
-        ac.setEncodingAesKey(PropKit.get("encodingAesKey", "setting it in config file"));
-        return ac;
+        return SessionUtil.getApiConfig(this);
     }
 
     /**

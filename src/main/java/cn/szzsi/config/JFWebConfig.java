@@ -4,6 +4,7 @@ import cn.szzsi.controller.CustomerController;
 import cn.szzsi.controller.OrderController;
 import cn.szzsi.controller.WeixinApiController;
 import cn.szzsi.controller.WeixinMsgController;
+import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
@@ -49,6 +50,7 @@ public class JFWebConfig extends JFinalConfig{
     }
 
     public void configInterceptor(Interceptors me){
+        me.add(new AuthInterceptor());
         me.add(new SessionInViewInterceptor());
     }
 

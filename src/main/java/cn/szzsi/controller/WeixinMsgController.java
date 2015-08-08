@@ -6,11 +6,13 @@
 
 package cn.szzsi.controller;
 
-import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
+import cn.szzsi.util.HuanxinUtil;
+import cn.szzsi.util.SessionUtil;
+import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.ApiConfig;
@@ -18,36 +20,20 @@ import com.jfinal.weixin.sdk.jfinal.MsgController;
 import com.jfinal.weixin.sdk.msg.in.*;
 import com.jfinal.weixin.sdk.msg.in.event.*;
 import com.jfinal.weixin.sdk.msg.in.speech_recognition.InSpeechRecognitionResults;
-import com.jfinal.weixin.sdk.msg.out.*;
+import com.jfinal.weixin.sdk.msg.out.OutCustomMsg;
+import com.jfinal.weixin.sdk.msg.out.OutTextMsg;
 
-/**
- * 将此 DemoController 在YourJFinalConfig 中注册路由，
- * 并设置好weixin开发者中心的 URL 与 token ，使 URL 指向该
- * DemoController 继承自父类 WeixinController 的 index
- * 方法即可直接运行看效果，在此基础之上修改相关的方法即可进行实际项目开发
- */
 public class WeixinMsgController extends MsgController{
 
     static Logger logger = Logger.getLogger(WeixinMsgController.class);
 
-    /**
-     * 如果要支持多公众账号，只需要在此返回各个公众号对应的  ApiConfig 对象即可
-     * 可以通过在请求 url 中挂参数来动态从数据库中获取 ApiConfig 属性值
-     */
+    @Clear
+    public void index(){
+        super.index();
+    }
+
     public ApiConfig getApiConfig(){
-        ApiConfig ac = new ApiConfig();
-        // 配置微信 API 相关常量
-        ac.setToken(PropKit.get("token"));
-        ac.setAppId(PropKit.get("appId"));
-        ac.setAppSecret(PropKit.get("appSecret"));
-        /**
-         *  是否对消息进行加密，对应于微信平台的消息加解密方式：
-         *  1：true进行加密且必须配置 encodingAesKey
-         *  2：false采用明文模式，同时也支持混合模式
-         */
-        ac.setEncryptMessage(PropKit.getBoolean("encryptMessage",false));
-        ac.setEncodingAesKey(PropKit.get("encodingAesKey","setting it in config file"));
-        return ac;
+        return SessionUtil.getApiConfig(this);
     }
 
     protected void processInTextMsg(InTextMsg inTextMsg){
