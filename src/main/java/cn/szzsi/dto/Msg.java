@@ -5,7 +5,7 @@ package cn.szzsi.dto;
  */
 public class Msg{
 
-    public static final Msg SUCCESS = new Msg(true,0);
+    public static final Msg SUCCESS = new Msg(true,0,"调用成功");
 
     private boolean success;
     private int code;
@@ -62,7 +62,7 @@ public class Msg{
     }
 
     public static final Msg success(Object data){
-        return new Msg(true,0,null,data);
+        return new Msg(true,0,"调用成功",data);
     }
 
     public static final Msg fail(int code,String desc){

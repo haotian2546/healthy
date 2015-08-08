@@ -3,18 +3,19 @@ package cn.szzsi.controller;
 import cn.szzsi.dto.CustomerDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
-import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.model.Customer;
+import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.util.SessionUtil;
-import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
+import com.jfinal.log.Logger;
 
 /**
  * Created by Yishe on 8/6/2015.
  */
 public class CustomerController extends Controller{
 
+    private static final Logger logger = Logger.getLogger(CustomerController.class);
     /**
      * 医生注册
      */
@@ -39,13 +40,18 @@ public class CustomerController extends Controller{
         Customer customer = Customer.getByUsername(username);
         if(customer == null || !customer.getStr("password").equals(password)){
             renderJson(Msg.fail(1,"用户名或密码错误"));
-            SessionUtil.setCustomer(this,customer);
         }else{
+            SessionUtil.setCustomer(this,customer);
             renderJson(Msg.success(new CustomerDto(customer)));
         }
     }
 
     public void order(){
+
+    }
+
+    public void list(){
+
 
     }
 

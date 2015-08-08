@@ -59,8 +59,9 @@ public class HuanxinUtil{
         Map<String,String> head = new HashMap<>();
         head.put("Content-Type","application/json");
         head.put("Authorization","Bearer "+getToken());
-        String json = "{\"target_type\":\"users\",\"target\":[\""+customer.getStr("username")+"\"],\"msg\":{\"type\":\"txt\",\"msg\":\""+message.getStr("content")+"\"},\"ext\":{\"order_id\":\""+message.getStr("order_id")+"\"}}";
+        String json = "{\"target_type\":\"users\",\"target\":[\""+customer.getStr("username")+"\"],\"msg\":{\"type\":\"txt\",\"msg\":\""+message.getStr("content")+"\"},\"ext\":{\"order_id\":"+message.getInt("order_id")+"}}";
         String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/messages",ORG_NAME,APP_NAME),json,head);
+
     }
 
     public static void noticeNewOrder(Order order){

@@ -12,11 +12,12 @@ import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
 import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.util.SessionUtil;
+import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
-import com.jfinal.kit.PropKit;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.jfinal.MsgController;
+import com.jfinal.weixin.sdk.jfinal.MsgInterceptor;
 import com.jfinal.weixin.sdk.msg.in.*;
 import com.jfinal.weixin.sdk.msg.in.event.*;
 import com.jfinal.weixin.sdk.msg.in.speech_recognition.InSpeechRecognitionResults;
@@ -25,9 +26,10 @@ import com.jfinal.weixin.sdk.msg.out.OutTextMsg;
 
 public class WeixinMsgController extends MsgController{
 
-    static Logger logger = Logger.getLogger(WeixinMsgController.class);
+    private static final Logger logger = Logger.getLogger(WeixinMsgController.class);
 
     @Clear
+    @Before({MsgInterceptor.class})
     public void index(){
         super.index();
     }
@@ -101,7 +103,7 @@ public class WeixinMsgController extends MsgController{
         if(InFollowEvent.EVENT_INFOLLOW_SUBSCRIBE.equals(inFollowEvent.getEvent())){
             logger.debug("关注：" + inFollowEvent.getFromUserName());
             OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
-            outMsg.setContent("这是Jfinal-weixin测试服务</br>\r\n感谢您的关注");
+            outMsg.setContent("欢迎关注医疗咨询公众平台");
             render(outMsg);
             Consulter.getByOpenId(inFollowEvent.getFromUserName());
         }

@@ -16,10 +16,10 @@ public class OrderDto{
 
     public OrderDto(Order order,Consulter consulter){
         this.id = order.getInt("id");
-        this.time = consulter.getLong("create_time");
+        this.time = order.getLong("create_time");
         this.nickname = consulter.getStr("nickname");
         this.headurl = consulter.getStr("headurl");
-        this.desc = Message.getOrderDesc(order.getInt("id"));;
+        this.desc = Message.getOrderDesc(order.getInt("id"));
     }
 
     public int getId(){

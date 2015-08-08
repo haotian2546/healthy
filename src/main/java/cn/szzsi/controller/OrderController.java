@@ -7,7 +7,7 @@ import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
 import cn.szzsi.util.CustomApi;
 import cn.szzsi.util.SessionUtil;
-import com.jfinal.kit.PropKit;
+import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 
@@ -18,6 +18,7 @@ import java.util.List;
  * Created by Yishe on 8/6/2015.
  */
 public class OrderController extends ApiController{
+    private static final Logger logger = Logger.getLogger(OrderController.class);
 
     @Override
     public ApiConfig getApiConfig(){
@@ -76,6 +77,31 @@ public class OrderController extends ApiController{
 
 
     }
+
+    public void evaluation(){
+
+
+    }
+
+    public void consulter(){
+        if("GET".equalsIgnoreCase(getRequest().getMethod())) {
+
+        } else {
+
+
+        }
+
+    }
+
+    public void forward(){
+
+
+    }
+
+
+
+
+
 
 
 }
