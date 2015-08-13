@@ -51,6 +51,6 @@ public class Order extends Model<Order>{
     }
 
     public static final List<Order> getUnserverOrder(){
-        return dao.find("select * from consulter_order where server_status=0");
+        return dao.find("select * from consulter_order where server_status=0 and status=0");
     }
 }

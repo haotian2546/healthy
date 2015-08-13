@@ -5,16 +5,17 @@ import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.log.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Yishe on 8/6/2015.
  */
 public class HuanxinUtil{
+    private static final Logger logger = Logger.getLogger(HuanxinUtil.class);
     private static final String ORG_NAME = "szzsit";
     private static final String APP_NAME = "ylzx";
     private static final String CLIENT_ID = "YXA6ZP0e0DsKEeWfu2FSEhhxPw";
@@ -32,9 +33,11 @@ public class HuanxinUtil{
             String get_token_json = "{\"grant_type\":\"client_credentials\",\"client_id\":\""+CLIENT_ID+"\",\"client_secret\":\""+CLIENT_SECRET+"\"}";
             String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/token",ORG_NAME,APP_NAME),get_token_json,head);
             token = new AccessToken(data);
+            if(logger.isDebugEnabled()){
+                logger.debug("环信:获取accessToken\n"+data);
+            }
         }
         return token.getAccess_token();
-
     }
 
     public static void register(Customer customer){
@@ -43,16 +46,9 @@ public class HuanxinUtil{
         head.put("Authorization","Bearer "+getToken());
         String json = "{\"username\":\""+customer.getStr("username")+"\",\"password\":\""+customer.getStr("password")+"\"}";
         String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/users",ORG_NAME,APP_NAME),json,head);
-        try{
-            Map e = (new ObjectMapper()).readValue(data,Map.class);
-            List<Map> entities = (List) e.get("entities");
-            String uuid = (String) entities.get(0).get("uuid");
-
-
-        }catch(IOException e1){
-            e1.printStackTrace();
+        if(logger.isDebugEnabled()){
+            logger.debug("环信:注册用户\n"+data);
         }
-
     }
 
     public static void sendMsg(Customer customer,Message message){
@@ -61,10 +57,18 @@ public class HuanxinUtil{
         head.put("Authorization","Bearer "+getToken());
         String json = "{\"target_type\":\"users\",\"target\":[\""+customer.getStr("username")+"\"],\"msg\":{\"type\":\"txt\",\"msg\":\""+message.getStr("content")+"\"},\"ext\":{\"order_id\":"+message.getInt("order_id")+"}}";
         String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/messages",ORG_NAME,APP_NAME),json,head);
+        if(logger.isDebugEnabled()){
+            logger.debug("环信:推送消息\n"+data);
+        }
 
     }
 
-    public static void noticeNewOrder(Order order){
+    public static final void noticeNewOrder(Order order){
+
+
+    }
+
+    public static final void forward(Customer another,Integer id){
 
 
     }
@@ -97,6 +101,10 @@ public class HuanxinUtil{
             if(expiredTime == null || access_token == null)
                 return false;
             return expiredTime.longValue() < System.currentTimeMillis();
+        }
+
+        public String getApplication(){
+            return application;
         }
     }
 }

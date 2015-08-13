@@ -1,5 +1,7 @@
 package cn.szzsi.dto;
 
+import cn.szzsi.model.Consulter;
+
 /**
  * Created by Yishe on 8/8/2015.
  */
@@ -13,6 +15,18 @@ public class ConsulterDto{
     private String phone;
     private long childbirth;
     private long lastAskTime;
+
+    public ConsulterDto(Consulter consulter){
+        this.id = consulter.getInt("id");
+        this.nickname = consulter.getStr("nickname");
+        this.username = consulter.getStr("username");
+        this.headurl = consulter.getStr("headurl");
+        this.childsex = consulter.getInt("childsex");
+        this.childname = consulter.getStr("childname");
+        this.phone = consulter.getStr("phone");
+        this.childbirth = consulter.getLong("childbirth");
+//        this.lastAskTime = consulter.getLong("lastAskTime");
+    }
 
     public int getId(){
         return id;

@@ -1,6 +1,7 @@
 package cn.szzsi.controller;
 
 import cn.szzsi.dto.CustomerDto;
+import cn.szzsi.dto.CustomerLoginDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.model.Customer;
@@ -8,6 +9,9 @@ import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.log.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Yishe on 8/6/2015.
@@ -45,17 +49,24 @@ public class CustomerController extends Controller{
             renderJson(Msg.fail(1,"用户名或密码错误"));
         }else{
             SessionUtil.setCustomer(this,customer);
-            renderJson(Msg.success(new CustomerDto(customer)));
+            renderJson(Msg.success(new CustomerLoginDto(customer)));
         }
     }
 
     public void order(){
 
+
     }
 
     public void list(){
-
-
+        Integer location = getParaToInt("location");
+        List<Customer> customers = Customer.getListByLocation(location);
+        List<CustomerDto> dtos = new ArrayList<CustomerDto>();
+        for(Customer customer : customers){
+            CustomerDto dto = new CustomerDto(customer);
+            dtos.add(dto);
+        }
+        renderJson(Msg.success(dtos));
     }
 
 }

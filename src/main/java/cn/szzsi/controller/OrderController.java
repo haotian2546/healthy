@@ -1,11 +1,14 @@
 package cn.szzsi.controller;
 
+import cn.szzsi.dto.ConsulterDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.dto.OrderDto;
 import cn.szzsi.model.Consulter;
+import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
 import cn.szzsi.util.CustomApi;
+import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.Page;
@@ -51,9 +54,9 @@ public class OrderController extends ApiController{
     public void confirm(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
-        if(order.getInt("customer_id") == null){
+        if(order.getInt("customer_id") == null || order.getInt("status") == 2){
             order.set("customer_id",SessionUtil.getCustomerId(this));
-            order.set("server_status",1).update();
+            order.set("status",1).update();
             renderJson(Msg.SUCCESS);
         }else{
             renderJson(Msg.fail(1,"来晚了一步"));
@@ -90,18 +93,42 @@ public class OrderController extends ApiController{
     }
 
     public void consulter(){
+        Integer id = getParaToInt("id");
+        Order order = Order.dao.findById(id);
+        Consulter consulter = order.getConsulter();
         if("GET".equalsIgnoreCase(getRequest().getMethod())) {
-
+            ConsulterDto dto = new ConsulterDto(consulter);
+            renderJson(Msg.success(dto));
         } else {
-
-
+            int location = getParaToInt("location");
+            int childsex = getParaToInt("childsex");
+            String childname = getPara("childname");
+            String phone = getPara("phone");
+            long childbirth = getParaToLong("childbirth");
+            consulter.set("location",location).set("childsex",childsex).set("childname",childname);
+            consulter.set("childbirth",childbirth).set("phone",phone);
+            consulter.update();
+            renderJson(Msg.SUCCESS);
         }
-
     }
 
     public void forward(){
-
-
+        Integer id = getParaToInt("id");
+        Integer customer_id = getParaToInt("customer_id");
+        Customer another = Customer.dao.findById(customer_id);
+        if(another == null){
+            renderJson(Msg.fail(1,"参数错误"));
+            return;
+        }
+        Order order = Order.dao.findById(id);
+        Integer customerId = SessionUtil.getCustomerId(this);
+        if(customerId.equals(order.getInt("customer_id"))){
+            order.set("status",2).update();
+            HuanxinUtil.forward(another,id);
+            renderJson(Msg.SUCCESS);
+        }else{
+            renderJson(Msg.fail(1,"参数错误"));
+        }
     }
 
 

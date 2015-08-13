@@ -3,6 +3,8 @@ package cn.szzsi.model;
 import cn.szzsi.util.HuanxinUtil;
 import com.jfinal.plugin.activerecord.Model;
 
+import java.util.List;
+
 /**
  * Created by Yishe on 8/5/2015.
  */
@@ -37,5 +39,9 @@ public class Customer extends Model<Customer>{
             temp = getByUsername(username);
         }
         return temp;
+    }
+
+    public static final List<Customer> getListByLocation(Integer location){
+        return dao.find("select * from customer where location=?",location);
     }
 }
