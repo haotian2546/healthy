@@ -13,7 +13,7 @@ public class ConsulterDto{
     private int childsex;
     private String childname;
     private String phone;
-    private long childbirth;
+    private Long childbirth;
     private long lastAskTime;
 
     public ConsulterDto(Consulter consulter){
@@ -76,11 +76,11 @@ public class ConsulterDto{
         this.childname = childname;
     }
 
-    public long getChildbirth(){
+    public Long getChildbirth(){
         return childbirth;
     }
 
-    public void setChildbirth(long childbirth){
+    public void setChildbirth(Long childbirth){
         this.childbirth = childbirth;
     }
 

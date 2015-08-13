@@ -43,7 +43,7 @@ public class Message extends Model<Message>{
         StringBuilder sql = new StringBuilder();
         sql.append("from message where order_id=? ");
         if(time != null){
-            sql.append("and create_time>=").append(time.longValue());
+            sql.append("and create_time<=").append(time.longValue());
         }
         return dao.paginate(pageNo,pageSize,"select * ",sql.toString(),orderId);
     }

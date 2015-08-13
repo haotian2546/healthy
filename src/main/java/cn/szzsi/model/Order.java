@@ -33,7 +33,6 @@ public class Order extends Model<Order>{
                 HuanxinUtil.noticeNewOrder(order);
             }
         }
-
         return order;
     }
 

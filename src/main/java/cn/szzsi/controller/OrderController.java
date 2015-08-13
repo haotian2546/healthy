@@ -88,6 +88,8 @@ public class OrderController extends ApiController{
     }
 
     public void evaluation(){
+        Integer id = getParaToInt("id");
+        Order order = Order.dao.findById(id);
 
 
     }

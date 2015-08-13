@@ -28,6 +28,7 @@ public class Consulter extends Model<Consulter>{
                 user.set("openid",openid);
                 user.set("nickname",openid);
                 user.set("location",0);
+                user.set("childsex",0);
                 user.save();
             }
         }

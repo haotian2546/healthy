@@ -1,9 +1,6 @@
 package cn.szzsi.config;
 
-import cn.szzsi.controller.CustomerController;
-import cn.szzsi.controller.OrderController;
-import cn.szzsi.controller.WeixinApiController;
-import cn.szzsi.controller.WeixinMsgController;
+import cn.szzsi.controller.*;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
@@ -34,6 +31,7 @@ public class JFWebConfig extends JFinalConfig{
         me.add("/api", WeixinApiController.class);
         me.add("/cus", CustomerController.class);
         me.add("/order", OrderController.class);
+        me.add("/wx", WeixinController.class);
     }
 
     public void configPlugin(Plugins me){
