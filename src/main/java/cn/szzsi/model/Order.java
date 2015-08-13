@@ -54,10 +54,10 @@ public class Order extends Model<Order>{
     }
 
     public static final List<Order> getServeringOrderByCusId(Integer cusId){
-        return dao.find("select * from consulter_order where consulter_id=? and server_status=0 and status=1",cusId);
+        return dao.find("select * from consulter_order where customer_id=? and server_status=0 and status=1",cusId);
     }
 
     public static final List<Order> getForwardingOrderByCusId(Integer cusId){
-        return dao.find("select * from consulter_order where consulter_id=? and server_status=0 and status=2",cusId);
+        return dao.find("select * from consulter_order where customer_id=? and server_status=0 and status=2",cusId);
     }
 }

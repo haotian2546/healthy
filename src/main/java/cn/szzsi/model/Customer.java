@@ -28,9 +28,8 @@ public class Customer extends Model<Customer>{
                 temp.set("password",password);
                 temp.set("nickname",nickname);
                 temp.set("location",location);
-                temp.set("Integral",0);
-                temp.set("online",0);
-                temp.set("serviceTimes",0);
+                temp.set("integral",0);
+                temp.set("service_times",0);
                 temp.save();
                 HuanxinUtil.register(temp);
             }

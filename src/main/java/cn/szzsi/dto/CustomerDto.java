@@ -10,6 +10,7 @@ public class CustomerDto{
     private String username;
     private String nickname;
     private int location;
+    private int isOnline;
 
     public CustomerDto(Customer customer){
         this.id = customer.getInt("id");

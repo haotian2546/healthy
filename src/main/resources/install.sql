@@ -84,12 +84,11 @@ create table customer
    nickname             varchar(256) not null,
    headurl              varchar(256),
    location             int not null,
-   Integral             bigint not null,
+   integral             bigint not null default 0,
    company              varchar(256),
    department           varchar(256),
    memo                 text,
-   serviceTimes         int not null,
-   online               int not null comment '是否在线',
+   service_times       int not null default 0,
    primary key (id)
 )
 DEFAULT CHARSET=utf8;
