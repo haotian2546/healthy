@@ -1,5 +1,6 @@
 package cn.szzsi.model;
 
+import cn.szzsi.util.HuanxinUtil;
 import com.jfinal.plugin.activerecord.Model;
 
 /**
@@ -27,7 +28,9 @@ public class Customer extends Model<Customer>{
                 temp.set("location",location);
                 temp.set("Integral",0);
                 temp.set("online",0);
+                temp.set("serviceTimes",0);
                 temp.save();
+                HuanxinUtil.register(temp);
             }
         }
         if(temp == null){

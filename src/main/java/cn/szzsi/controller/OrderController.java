@@ -8,6 +8,7 @@ import cn.szzsi.model.Order;
 import cn.szzsi.util.CustomApi;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.log.Logger;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
 
@@ -51,7 +52,8 @@ public class OrderController extends ApiController{
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
         if(order.getInt("customer_id") == null){
-            order.set("customer_id",SessionUtil.getCustomerId(this)).update();
+            order.set("customer_id",SessionUtil.getCustomerId(this));
+            order.set("server_status",1).update();
             renderJson(Msg.SUCCESS);
         }else{
             renderJson(Msg.fail(1,"来晚了一步"));
@@ -74,8 +76,12 @@ public class OrderController extends ApiController{
     }
 
     public void history(){
-
-
+        Integer id = getParaToInt("id");
+        Integer pageSize = getParaToInt("pageSize");
+        Integer pageNo = getParaToInt("pageNo");
+        Long time = getParaToLong("time");
+        Page<Message> page = Message.getPage(pageNo,pageSize,id,time);
+        renderJson(Msg.success(page));
     }
 
     public void evaluation(){

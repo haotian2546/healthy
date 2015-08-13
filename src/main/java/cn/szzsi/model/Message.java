@@ -1,6 +1,7 @@
 package cn.szzsi.model;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 
 /**
  * Created by Yishe on 8/6/2015.
@@ -36,6 +37,15 @@ public class Message extends Model<Message>{
             return message.getStr("content");
         }
         return null;
+    }
+
+    public static final Page<Message> getPage(int pageNo,int pageSize,int orderId,Long time){
+        StringBuilder sql = new StringBuilder();
+        sql.append("from message where order_id=? ");
+        if(time != null){
+            sql.append("and create_time>=").append(time.longValue());
+        }
+        return dao.paginate(pageNo,pageSize,"select * ",sql.toString(),orderId);
     }
 
 

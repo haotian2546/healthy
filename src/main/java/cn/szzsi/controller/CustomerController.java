@@ -4,7 +4,6 @@ import cn.szzsi.dto.CustomerDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.model.Customer;
-import cn.szzsi.util.HuanxinUtil;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
@@ -22,14 +21,18 @@ public class CustomerController extends Controller{
     @Clear(AuthInterceptor.class)
     public void reg(){
         String username = getPara("username");
+        Customer customer = Customer.getByUsername(username);
+        if(customer != null){
+            renderJson(Msg.fail(1,"该用户名已被注册"));
+            return;
+        }
         String password = getPara("password");
         String nickname = getPara("nickname");
         String headurl = getPara("headurl");
         String memo = getPara("memo");
         String department = getPara("department");
         int location = getParaToInt("location",Integer.valueOf(0));
-        Customer customer = Customer.register(username,password,nickname,headurl,memo,department,location);
-        HuanxinUtil.register(customer);
+        Customer.register(username,password,nickname,headurl,memo,department,location);
         renderJson(Msg.SUCCESS);
     }
 
