@@ -7,6 +7,8 @@ import com.jfinal.kit.HttpKit;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.AccessTokenApi;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by Yishe on 8/7/2015.
  */
@@ -22,7 +24,14 @@ public class CustomApi{
     private static final void sendMsg(String openId,String message){
         String jsonStr = "{\"touser\":\""+openId+"\",\"msgtype\":\"text\",\"text\":{\"content\":\""+message+"\"}}";
         String jsonResult = HttpKit.post(sendUrl + AccessTokenApi.getAccessToken().getAccessToken(),jsonStr);
-        System.out.println(System.getProperty("file.encoding"));
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("¹þ¹þ");
+        System.out.println(jsonStr);
+        try{
+            System.out.println(new String(jsonResult.getBytes("UTF-8"),"UTF-8"));
+        }catch(UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
         if(logger.isDebugEnabled()){
             logger.debug("send:\n"+jsonStr);
             logger.debug("\nrecive:\n"+jsonResult);
