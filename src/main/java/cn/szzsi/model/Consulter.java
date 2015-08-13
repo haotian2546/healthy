@@ -1,6 +1,7 @@
 package cn.szzsi.model;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.weixin.sdk.api.ApiResult;
 
 /**
  * Created by Yishe on 8/5/2015.
@@ -33,4 +34,9 @@ public class Consulter extends Model<Consulter>{
         return user;
     }
 
+    public boolean update(ApiResult apiResult){
+        set("nickname",apiResult.getStr("nickname"));
+        set("headurl",apiResult.getStr("headimgurl"));
+        return update();
+    }
 }

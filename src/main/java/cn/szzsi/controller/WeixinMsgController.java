@@ -16,6 +16,8 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.ApiConfig;
+import com.jfinal.weixin.sdk.api.ApiResult;
+import com.jfinal.weixin.sdk.api.UserApi;
 import com.jfinal.weixin.sdk.jfinal.MsgController;
 import com.jfinal.weixin.sdk.jfinal.MsgInterceptor;
 import com.jfinal.weixin.sdk.msg.in.*;
@@ -105,7 +107,11 @@ public class WeixinMsgController extends MsgController{
             OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
             outMsg.setContent("欢迎关注医疗咨询公众平台");
             render(outMsg);
-            Consulter.getByOpenId(inFollowEvent.getFromUserName());
+            Consulter consulter = Consulter.getByOpenId(inFollowEvent.getFromUserName());
+            ApiResult apiResult = UserApi.getUserInfo(inFollowEvent.getFromUserName());
+            if(apiResult.getInt("subscribe") == 1){
+                consulter.update(apiResult);
+            }
         }
         // 如果为取消关注事件，将无法接收到传回的信息
         if(InFollowEvent.EVENT_INFOLLOW_UNSUBSCRIBE.equals(inFollowEvent.getEvent())){
