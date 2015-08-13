@@ -2,19 +2,37 @@ package cn.szzsi.util;
 
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Message;
+import cn.szzsi.model.Order;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.AccessTokenApi;
 
 /**
  * Created by Yishe on 8/7/2015.
  */
 public class CustomApi{
+    private static final Logger logger = Logger.getLogger(CustomApi.class);
+
     private static String sendUrl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
 
     public static final void sendMsg(Consulter consulter,Message message){
-        String jsonStr = "{\"touser\":\""+consulter.get("openid")+"\",\"msgtype\":\"text\",\"text\":{\"content\":\""+message.get("content")+"\"}}";
+        sendMsg(consulter.getStr("openid"),message.getStr("content"));
+    }
+
+    private static final void sendMsg(String openId,String message){
+        String jsonStr = "{\"touser\":\""+openId+"\",\"msgtype\":\"text\",\"text\":{\"content\":\""+message+"\"}}";
         String jsonResult = HttpKit.post(sendUrl + AccessTokenApi.getAccessToken().getAccessToken(),jsonStr);
-        
+        System.out.println(System.getProperty("file.encoding"));
+        if(logger.isDebugEnabled()){
+            logger.debug("send:\n"+jsonStr);
+            logger.debug("\nrecive:\n"+jsonResult);
+        }
+    }
+
+    public static final void evaluate(Order order){
+        String content = "点击 <a href=\\\"www.baidu.com\\\">这里</a> 对本次服务进行评价";
+        Consulter consulter = order.getConsulter();
+        sendMsg(consulter.getStr("openid"),content);
     }
 
 }

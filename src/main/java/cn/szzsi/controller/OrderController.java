@@ -90,8 +90,13 @@ public class OrderController extends ApiController{
     public void evaluation(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
-
-
+        Integer customerId = SessionUtil.getCustomerId(this);
+        if(customerId.equals(order.getInt("customer_id")) && order.getInt("server_status") == 0){
+            CustomApi.evaluate(order);
+            renderJson(Msg.SUCCESS);
+        }else{
+            renderJson(Msg.fail(1,"参数错误"));
+        }
     }
 
     public void consulter(){
