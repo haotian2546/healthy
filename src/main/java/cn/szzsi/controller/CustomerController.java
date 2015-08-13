@@ -5,6 +5,7 @@ import cn.szzsi.dto.CustomerLoginDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.model.Customer;
+import cn.szzsi.model.Order;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
@@ -54,8 +55,15 @@ public class CustomerController extends Controller{
     }
 
     public void order(){
-
-
+        Integer cusId = SessionUtil.getCustomerId(this);
+        Integer status = getParaToInt("status");
+        List<Order> orders = null;
+        if(1 == status){
+            orders = Order.getServeringOrderByCusId(cusId);
+        }else if(2 == status){
+            orders = Order.getForwardingOrderByCusId(cusId);
+        }
+        renderJson(Msg.success(orders));
     }
 
     public void list(){

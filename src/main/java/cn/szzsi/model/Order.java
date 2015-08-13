@@ -11,10 +11,10 @@ import java.util.List;
 public class Order extends Model<Order>{
     public static final Order dao = new Order();
 
-    public static final Order getServeringOrderByConId(int id){
-        Order order =  dao.findFirst("select * from consulter_order where consulter_id=? and server_status=0",id);
+    public static final Order getServeringOrderByConId(int consulterId){
+        Order order =  dao.findFirst("select * from consulter_order where consulter_id=? and server_status=0",consulterId);
         if(order == null){
-            order = createOrder(id);
+            order = createOrder(consulterId);
         }
         return order;
     }
@@ -52,5 +52,13 @@ public class Order extends Model<Order>{
 
     public static final List<Order> getUnserverOrder(){
         return dao.find("select * from consulter_order where server_status=0 and status=0");
+    }
+
+    public static final List<Order> getServeringOrderByCusId(Integer cusId){
+        return dao.find("select * from consulter_order where consulter_id=? and server_status=0 and status=1",cusId);
+    }
+
+    public static final List<Order> getForwardingOrderByCusId(Integer cusId){
+        return dao.find("select * from consulter_order where consulter_id=? and server_status=0 and status=2",cusId);
     }
 }
