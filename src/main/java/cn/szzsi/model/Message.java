@@ -39,6 +39,11 @@ public class Message extends Model<Message>{
         return null;
     }
 
+    public static final Message getOrderLastMessage(int orderId){
+        Message message = dao.findFirst("select * from message where order_id=? order by create_time desc",orderId);
+        return message;
+    }
+
     public static final Page<Message> getPage(int pageNo,int pageSize,int orderId,Long time){
         StringBuilder sql = new StringBuilder();
         sql.append("from message where order_id=? ");

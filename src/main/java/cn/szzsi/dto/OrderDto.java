@@ -13,6 +13,7 @@ public class OrderDto{
     private String headurl;
     private String desc;
     private long time;
+    private Chat message;
 
     public OrderDto(Order order,Consulter consulter){
         this.id = order.getInt("id");
@@ -20,6 +21,7 @@ public class OrderDto{
         this.nickname = consulter.getStr("nickname");
         this.headurl = consulter.getStr("headurl");
         this.desc = Message.getOrderDesc(order.getInt("id"));
+        this.message =  new Chat(Message.getOrderLastMessage(order.getInt("id")));
     }
 
     public int getId(){
@@ -46,6 +48,14 @@ public class OrderDto{
         this.headurl = headurl;
     }
 
+    public Chat getMessage(){
+        return message;
+    }
+
+    public void setMessage(Chat message){
+        this.message = message;
+    }
+
     public String getDesc(){
         return desc;
     }
@@ -55,10 +65,36 @@ public class OrderDto{
     }
 
     public long getTime(){
-        return time;
+        return time;                                                                                                     
     }
 
     public void setTime(long time){
         this.time = time;
+    }
+
+    public static final class Chat{
+        private String content;
+        private long time;
+
+        public Chat(Message message){
+            this.content = message.getStr("content");
+            this.time = message.getLong("create_time");
+        }
+
+        public long getTime(){
+            return time;
+        }
+
+        public void setTime(long time){
+            this.time = time;
+        }
+
+        public String getContent(){
+            return content;
+        }
+
+        public void setContent(String content){
+            this.content = content;
+        }
     }
 }

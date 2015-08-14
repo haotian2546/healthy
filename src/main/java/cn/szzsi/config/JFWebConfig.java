@@ -12,7 +12,9 @@ import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.jfinal.render.FreeMarkerRender;
 import com.jfinal.weixin.sdk.api.ApiConfigKit;
+import freemarker.template.TemplateModelException;
 
 public class JFWebConfig extends JFinalConfig{
     public void configConstant(Constants me){
@@ -21,6 +23,11 @@ public class JFWebConfig extends JFinalConfig{
         me.setError404View("/404.html");
         me.setError500View("/500.html");
         me.setBaseViewPath("/WEB-INF/views");
+        try{
+            FreeMarkerRender.getConfiguration().setSharedVariable("ctx",JFinal.me().getContextPath());
+        }catch(TemplateModelException e){
+            e.printStackTrace();
+        }
         // ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
         ApiConfigKit.setDevMode(me.getDevMode());
     }
@@ -28,10 +35,10 @@ public class JFWebConfig extends JFinalConfig{
     @Override
     public void configRoute(Routes me){
         me.add("/msg", WeixinMsgController.class);
-        me.add("/api", WeixinApiController.class);
-        me.add("/cus", CustomerController.class);
-        me.add("/order", OrderController.class);
-        me.add("/wx", WeixinController.class);
+        me.add("/api",WeixinApiController.class);
+        me.add("/cus",CustomerController.class);
+        me.add("/order",OrderController.class);
+        me.add("/wx",WeixinController.class);
     }
 
     public void configPlugin(Plugins me){

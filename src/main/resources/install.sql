@@ -102,7 +102,7 @@ create table evaluation
 (
    id                   int not null auto_increment,
    order_id             int not null,
-   type                 int not null,
+   type                 int not null comment '0好评 1中评 2差评 3投诉' ,
    service_times        int,
    service_attitude     int,
    service_level        int,

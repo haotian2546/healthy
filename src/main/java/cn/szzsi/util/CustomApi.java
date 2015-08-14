@@ -3,11 +3,11 @@ package cn.szzsi.util;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
+import com.jfinal.core.JFinal;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.kit.PropKit;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.AccessTokenApi;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by Yishe on 8/7/2015.
@@ -24,14 +24,6 @@ public class CustomApi{
     private static final void sendMsg(String openId,String message){
         String jsonStr = "{\"touser\":\""+openId+"\",\"msgtype\":\"text\",\"text\":{\"content\":\""+message+"\"}}";
         String jsonResult = HttpKit.post(sendUrl + AccessTokenApi.getAccessToken().getAccessToken(),jsonStr);
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("¹ş¹ş");
-        System.out.println(jsonStr);
-        try{
-            System.out.println(new String(jsonResult.getBytes("UTF-8"),"UTF-8"));
-        }catch(UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
         if(logger.isDebugEnabled()){
             logger.debug("send:\n"+jsonStr);
             logger.debug("\nrecive:\n"+jsonResult);
@@ -39,7 +31,8 @@ public class CustomApi{
     }
 
     public static final void evaluate(Order order){
-        String content = "µã»÷ <a href=\\\"www.baidu.com\\\">ÕâÀï</a> ¶Ô±¾´Î·şÎñ½øĞĞÆÀ¼Û";
+        String url = PropKit.get("web.url") + JFinal.me().getContextPath() + "/wx/evaluation?id=" +order.getInt("id");
+        String content = "ç‚¹å‡» <a href=\\\""+url+"\\\">è¿™é‡Œ</a> å¯¹æœ¬æ¬¡æœåŠ¡è¿›è¡Œè¯„ä»·";
         Consulter consulter = order.getConsulter();
         sendMsg(consulter.getStr("openid"),content);
     }

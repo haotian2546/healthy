@@ -3,7 +3,9 @@ package cn.szzsi.controller;
 import cn.szzsi.dto.CustomerDto;
 import cn.szzsi.dto.CustomerLoginDto;
 import cn.szzsi.dto.Msg;
+import cn.szzsi.dto.OrderDto;
 import cn.szzsi.intercept.AuthInterceptor;
+import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Order;
 import cn.szzsi.util.SessionUtil;
@@ -63,7 +65,13 @@ public class CustomerController extends Controller{
         }else if(2 == status){
             orders = Order.getForwardingOrderByCusId(cusId);
         }
-        renderJson(Msg.success(orders));
+        List<OrderDto> dtoList = new ArrayList<>();
+        for(Order order:orders){
+            Consulter consulter = Consulter.dao.findById(order.getInt("consulter_id"));
+            OrderDto temp = new OrderDto(order,consulter);
+            dtoList.add(temp);
+        }
+        renderJson(Msg.success(dtoList));
     }
 
     public void list(){

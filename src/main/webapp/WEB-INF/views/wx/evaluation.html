@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>育儿</title>
+    <meta name="keywords" content="育儿"/>
+    <meta name="description" content="育儿"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <link href="${ctx}/res/css/main.css" rel="stylesheet"/>
+    <link href="${ctx}/res/css/index.css" rel="stylesheet"/>
+    <script src="${ctx}/res/js/jquery-1.9.0.min.js"></script>
+    <script src="${ctx}/res/js/jsAddress.js"></script>
+    <!--评价-->
+    <script type="text/javascript">
+        function addComment(){
+            $.ajax({
+                url:'${ctx}/wx/evaluation',type:'post',data:{id:"${id}"},dataType:'json',success:function(data){
+                }
+            })
+        }
+        $(function(){
+            $(document).on('mouseover','i[cjmark]',function(){
+                var num = $(this).index();
+                var pmark = $(this).parents('.revinp');
+                var mark = pmark.prevAll('input');
+                if(mark.prop('checked')) return false;
+                var list = $(this).parent().find('i');
+                for(var i = 0; i <= num; i++){
+                    list.eq(i).attr('class','level_solid');
+                }
+                for(var i = num + 1,len = list.length - 1; i <= len; i++){
+                    list.eq(i).attr('class','level_hollow');
+                }
+            })
+            //点击星星
+            $(document).on('click','i[cjmark]',function(){
+                var num = $(this).index();
+                var pmark = $(this).parents('.revinp');
+                var mark = pmark.prevAll('input');
+                if(mark.prop('checked')){
+                    mark.val('');
+                    mark.prop('checked',false);
+                    mark.prop('disabled',true);
+                }else{
+                    mark.val(num);
+                    mark.prop('checked',true);
+                    mark.prop('disabled',false);
+                }
+            })
+            //选框
+            $('#Addnewskill_119 input[type="checkbox"]').change(function(){
+                if($(this).not(':checked')){//!($(this).prop('checked'))
+                    $(this).prop('checked',false);
+                    $(this).prop('disabled',true)
+                    var smark = $(this).nextAll('.revinp');
+                    smark.find('span.revgrade').html('未评分');
+                    smark.find('i').attr('class','level_hollow');
+                    smark.val(6);
+                }
+            })
+        })
+    </script>
+    <!--单选框-->
+    <script type="text/javascript" src="${ctx}/res/js/jquery-labelauty.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(':input').labelauty();
+        });
+    </script>
+</head>
+<body>
+<section id="mainWin">
+    <div class="foot_cen sumtle">
+        <div class="gradecon" id="Addnewskill_119">
+            <ul class="rev_pro clearfix">
+                <li>
+                    <span class="revtit">响应时间</span>
+
+                    <div class="revinp">
+                        <span class="level">
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <span class="revtit">服务态度</span>
+
+                    <div class="revinp">
+                        <span class="level">
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <span class="revtit">专业水平</span>
+
+                    <div class="revinp">
+                        <span class="level">
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                            <i class="level_hollow" cjmark=""></i>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <div class="evaluate">
+                <span class="revtit">综合评价</span>
+                <ul class="dowebok">
+                    <li><input type="radio" name="radio" data-labelauty="好评" checked></li>
+                    <li><input type="radio" name="radio" data-labelauty="中评"></li>
+                    <li><input type="radio" name="radio" data-labelauty="差评"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="foot_cen sumtle">
+        <div class="gradecon">
+            <span class="wright_o">我要说两句</span> <textarea class="text"></textarea>
+        </div>
+    </div>
+    <div class="wasaicenter">
+        <a href="#" class="meschange wasai">提交</a> <a href="#" class="meschange wasai">取消</a>
+    </div>
+</section>
+</body>
+</html>

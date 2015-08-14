@@ -58,7 +58,8 @@ public class HuanxinUtil{
         String json = "{\"target_type\":\"users\",\"target\":[\""+customer.getStr("username")+"\"],\"msg\":{\"type\":\"txt\",\"msg\":\""+message.getStr("content")+"\"},\"ext\":{\"order_id\":"+message.getInt("order_id")+"}}";
         String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/messages",ORG_NAME,APP_NAME),json,head);
         if(logger.isDebugEnabled()){
-            logger.debug("环信:推送消息\n"+data);
+            logger.debug("环信推送:发送\n"+json);
+            logger.debug("环信推送:返回\n"+data);
         }
 
     }
