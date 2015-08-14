@@ -5,6 +5,7 @@ import cn.szzsi.dto.CustomerLoginDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.dto.OrderDto;
 import cn.szzsi.intercept.AuthInterceptor;
+import cn.szzsi.intercept.Require;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Order;
@@ -26,6 +27,7 @@ public class CustomerController extends Controller{
      * 医生注册
      */
     @Clear(AuthInterceptor.class)
+    @Require({"username","password","nickname"})
     public void reg(){
         String username = getPara("username");
         Customer customer = Customer.getByUsername(username);
@@ -44,6 +46,7 @@ public class CustomerController extends Controller{
     }
 
     @Clear(AuthInterceptor.class)
+    @Require({"username","password"})
     public void login(){
         String username = getPara("username");
         String password = getPara("password");
@@ -56,6 +59,7 @@ public class CustomerController extends Controller{
         }
     }
 
+    @Require("status:^[1,2]$")
     public void order(){
         Integer cusId = SessionUtil.getCustomerId(this);
         Integer status = getParaToInt("status");
@@ -74,6 +78,7 @@ public class CustomerController extends Controller{
         renderJson(Msg.success(dtoList));
     }
 
+    @Require("location:^\\d+$")
     public void list(){
         Integer location = getParaToInt("location");
         List<Customer> customers = Customer.getListByLocation(location);

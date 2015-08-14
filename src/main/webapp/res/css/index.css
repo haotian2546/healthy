@@ -1,0 +1,215 @@
+
+body{ background: #edeaea}
+/*首页*/
+.foot_cen{ background: #ffffff; border-radius: 10px; margin: 10px; overflow: hidden;}
+.message{ color: #93d04f; font-size: 16px; border-bottom: 1px solid #93d04f; padding: 15px}
+.felei li{ width: 100%; border-top: 1px solid #d4d4d4; padding: 15px; overflow: hidden; line-height: 22px }
+.felei li:nth-child(1){ border: none}
+.felei li span{ font-size: 14px;}
+.felei li span:nth-child(1){ color: #6b6b6b; display: block;  float: left; width: 30%; }
+.felei li span:nth-child(2){ color: #aeabab; display: block;  float: right; width: 70%; text-align: left}
+.meschange{width: 94%; margin: 0 auto; margin-bottom: 10px; margin-top: 15px; line-height: 40px;text-align: center;font-size: 15px;background: #42bd41; display: block;}
+.meschange:link,.meschange:visited{ color: #fff; border-radius: 8px}
+.pler { background: url(../images/rignt_icon.png) right no-repeat; background-size: 10px;}
+#addr_name{ border: none; line-height: 17px;}
+.back-icon { border-right: 2px solid #42bd41; border-bottom: 2px solid #42bd41; float: left; width: 11px; height: 11px;
+  -webkit-transform: rotate(135deg); transform: rotate(135deg);}
+#searchWin{display: block; position: relative; width: 100%; z-index: 1;  background: #fff; overflow: hidden}
+.back-span{float: left; margin: 18px 7px 16px 15px;}
+.select_e select{ border: none; width: 100%}
+.select_e{ width: 29%; float: right; background-color: #ffffff; background-image: none; line-height: 45px;}
+.select_e:nth-child(2){ margin-left: 1%; border-right: 1px solid #d4d4d4}
+.select_e:nth-child(3){ margin-left: 1%; border-right: 1px solid #d4d4d4}
+.select_e:nth-child(4){}
+.btn_order{display:block; width:90%; margin:0 5%; height:44px; line-height:44px; color:#fff; text-align:center; font-weight:500; font-size:1.1428em; border:0; background:#42bd41; border-radius: 8px; outline: 0; -webkit-appearance:none;}
+.true-btn {position: fixed; bottom: 20px; width: 100%;}
+.mod li:nth-child(1) span:nth-child(1):before{ content: "*"; color: #ff0202; position: relative; left: -8px; top: 3px;
+ width: 0px; display: inline-block;}
+.mod li:nth-child(3) span:nth-child(1):before{ content: "*"; color: #ff0202; position: relative; left: -8px; top: 3px;
+ width: 0px; display: inline-block;}
+.mod li:nth-child(5) span:nth-child(1):before{ content: "*"; color: #ff0202; position: relative; left: -8px; top: 3px;
+ width: 0px; display: inline-block;}
+.write{ border: none; display: block; width: 100%}
+
+
+
+
+
+
+.m_input  .label-radio {
+  position: relative;
+ 
+}
+.m_input  .label-radio  {
+  text-indent: -9999px;
+  float: left;
+}
+.check-div {
+  float: left;
+  width: 30%;
+}
+.m_input .label-radio label {
+  cursor: pointer;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 3px;
+  left: 3px;
+  margin: 0 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  -webkit-outline:none;
+  outline:none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border-radius: 100%;
+}
+
+.m_input  .label-radio input[type=radio]:checked + label {
+  background: #fff;
+  border: 1px solid #42bd41;
+  outline: 0;
+  -webkit-outline: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border: 1px solid #42bd41;
+}
+.m_input  .label-radio input[type=radio]:checked + label b{
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  background: #42bd41;
+  border-radius: 100%;
+  float: left;
+  width: 10px;
+  height: 10px;
+  -webkit-transform: rotate(50deg);
+  transform: rotate(50deg);
+}
+
+/*评价*/
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{display:inline-table}
+*html .clearfix{height:1%}
+.clearfix{display:block}
+*+html .clearfix{min-height:1%}
+.fl{float:left;}
+
+.gradecon{padding:10px;}
+.rev_pro li{line-height:60px; height:60px;}
+.rev_pro li .revtit{text-align:right;display:block;float:left;margin-right:10px;width:67px;}
+.revinp{display:inline; line-height: 90px;}
+.level .level_solid,.level .level_hollow{float:left;background-image:url("../images/icon2.png");background-repeat:no-repeat;display:inline-block; width:40px; height:35px;}
+.level .level_solid{background-position:3px 0px;}
+.level .level_hollow{background-position:-38px 0px;}
+.revgrade{margin-left:20px;}
+.level{ display: inline-block}
+
+.field input{margin:0 0 0 20px;}
+
+input.labelauty + label > span.labelauty-unchecked-image,
+input.labelauty + label > span.labelauty-checked-image
+{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: bottom;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+	transition: background-image 0.5s linear;
+	-moz-transition: background-image 0.5s linear;
+	-webkit-transition: background-image 0.5s linear;
+	-o-transition: background-image 0.5s linear;
+}
+
+/* When there's a label, add a little margin to the left */
+input.labelauty + label > span.labelauty-unchecked-image + span.labelauty-unchecked,
+input.labelauty + label > span.labelauty-checked-image + span.labelauty-checked
+{
+	margin-left: 7px;
+}
+
+/* When not Checked */
+input.labelauty:not(:checked) + label > span.labelauty-checked-image
+{
+	display: none;
+}
+
+input.labelauty:not(:checked) + label > span.labelauty-checked
+{
+	display: none;
+}
+
+/* When Checked */
+input.labelauty:checked + label
+{
+	background-color: #eaab25;
+	color: #ffffff;
+}
+
+input.labelauty:checked + label > span.labelauty-unchecked-image
+{
+	display: none;
+}
+
+input.labelauty:checked + label > span.labelauty-unchecked
+{
+	display: none;
+}
+
+input.labelauty:checked + label > span.labelauty-checked
+{
+	display: inline-block;
+}
+
+input.labelauty.no-label:checked + label > span.labelauty-checked
+{
+	display: block;
+}
+
+
+
+/* Add a background to (un)checked images */
+
+input.labelauty + label
+{
+	display: table;
+	font-size: 11px;
+	padding: 10px;
+	color: #b3b3b3;
+	cursor: pointer;
+	border-radius: 20px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+}
+.dowebok li{ display: inline-block}
+.dowebok{ border-radius: 60px; border: 1px solid #d1cece; width: 212px; height: 38px;float: left;margin-top: 10px;
+margin-left: 13px;}
+.dowebok li:nth-child(2){ left: 10px}
+span.labelauty-checked-image{background-image: url( ../images/input-checked.png );}
+.dowebok li:nth-child(1) span.labelauty-checked-image{background-image: url( ../images/input-checked-p.png); background-size: 16px}
+.dowebok li:nth-child(2) span.labelauty-checked-image{background-image: url( ../images/input-checked-2-p.png); background-size: 16px}
+.dowebok li:nth-child(3) span.labelauty-checked-image{background-image: url( ../images/input-checked-3-p.png); background-size: 16px}
+.dowebok li:nth-child(1) span.labelauty-unchecked-image{background-image: url( ../images/input-checked-r.png); background-size: 19px}
+.dowebok li:nth-child(2) span.labelauty-unchecked-image{background-image: url( ../images/input-checked-2.png); background-size: 19px}
+.dowebok li:nth-child(3) span.labelauty-unchecked-image{background-image: url( ../images/input-checked-3.png); background-size: 19px}
+ a,img,button,input,textarea,label{-webkit-tap-highlight-color:rgba(0,0,0,0);outline: none;}
+.evaluate .revtit{text-align:right;display:block;width:67px; float: left; line-height: 60px}
+.wright_o{ background: url(../images/qianbi.png) no-repeat left center; background-size: 15px; padding-left: 17px}
+.text{ width: 100%; border: none; font-size: 12px; padding-top:10px}
+.wasai{width: 30%; display: inline-block}
+.wasaicenter{ text-align: center}
+
+
+
+
+
+
+
+@media (max-width: 375px){
+    .felei li{ line-height: 19px;}
+    .m_input .label-radio label { top:2px}
+    .rev_pro li .revtit,.evaluate .revtit{ font-size: 13px; width: 52px;}
+    
+  }

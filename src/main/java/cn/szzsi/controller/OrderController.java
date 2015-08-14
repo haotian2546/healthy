@@ -3,6 +3,7 @@ package cn.szzsi.controller;
 import cn.szzsi.dto.ConsulterDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.dto.OrderDto;
+import cn.szzsi.intercept.Require;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
@@ -43,6 +44,7 @@ public class OrderController extends ApiController{
         renderJson(Msg.success(dtoList));
     }
 
+    @Require("id:^\\d+$")
     public void detail(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
@@ -51,6 +53,7 @@ public class OrderController extends ApiController{
         renderJson(Msg.success(temp));
     }
 
+    @Require("id:^\\d+$")
     public void confirm(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
@@ -63,10 +66,11 @@ public class OrderController extends ApiController{
         }
     }
 
+    @Require({"id:^\\d+$","content"})
     public void chat(){
         Integer id = getParaToInt("id");
-        String content = getPara("content");
         Order order = Order.dao.findById(id);
+        String content = getPara("content");
         Integer customerId = SessionUtil.getCustomerId(this);
         if(customerId.equals(order.getInt("customer_id"))){
             Message message = Message.createCustomerMessage(order,content);
@@ -78,6 +82,7 @@ public class OrderController extends ApiController{
         }
     }
 
+    @Require("id:^\\d+$")
     public void history(){
         Integer id = getParaToInt("id");
         Integer pageSize = getParaToInt("pageSize");
@@ -87,6 +92,7 @@ public class OrderController extends ApiController{
         renderJson(Msg.success(page));
     }
 
+    @Require("id:^\\d+$")
     public void evaluation(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
@@ -99,6 +105,7 @@ public class OrderController extends ApiController{
         }
     }
 
+    @Require("id:^\\d+$")
     public void consulter(){
         Integer id = getParaToInt("id");
         Order order = Order.dao.findById(id);
@@ -119,6 +126,7 @@ public class OrderController extends ApiController{
         }
     }
 
+    @Require("id:^\\d+$")
     public void forward(){
         Integer id = getParaToInt("id");
         Integer customer_id = getParaToInt("customer_id");
@@ -137,11 +145,6 @@ public class OrderController extends ApiController{
             renderJson(Msg.fail(1,"参数错误"));
         }
     }
-
-
-
-
-
 
 
 }

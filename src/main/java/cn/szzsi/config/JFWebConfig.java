@@ -2,6 +2,7 @@ package cn.szzsi.config;
 
 import cn.szzsi.controller.*;
 import cn.szzsi.intercept.AuthInterceptor;
+import cn.szzsi.intercept.CheckInterceptor;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Message;
@@ -28,7 +29,6 @@ public class JFWebConfig extends JFinalConfig{
         }catch(TemplateModelException e){
             e.printStackTrace();
         }
-        // ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
         ApiConfigKit.setDevMode(me.getDevMode());
     }
 
@@ -51,11 +51,11 @@ public class JFWebConfig extends JFinalConfig{
         arp.addMapping("consulter_order",Order.class);
         arp.addMapping("customer",Customer.class);
         arp.addMapping("message",Message.class);
-
     }
 
     public void configInterceptor(Interceptors me){
         me.add(new AuthInterceptor());
+        me.add(new CheckInterceptor());
         me.add(new SessionInViewInterceptor());
     }
 
