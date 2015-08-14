@@ -3,10 +3,7 @@ package cn.szzsi.config;
 import cn.szzsi.controller.*;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.intercept.CheckInterceptor;
-import cn.szzsi.model.Consulter;
-import cn.szzsi.model.Customer;
-import cn.szzsi.model.Message;
-import cn.szzsi.model.Order;
+import cn.szzsi.model.*;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
 import com.jfinal.ext.interceptor.SessionInViewInterceptor;
@@ -51,6 +48,7 @@ public class JFWebConfig extends JFinalConfig{
         arp.addMapping("consulter_order",Order.class);
         arp.addMapping("customer",Customer.class);
         arp.addMapping("message",Message.class);
+        arp.addMapping("integral_record",IntegralRecord.class);
     }
 
     public void configInterceptor(Interceptors me){

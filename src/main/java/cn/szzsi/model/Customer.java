@@ -1,5 +1,6 @@
 package cn.szzsi.model;
 
+import cn.szzsi.dto.IntegralRecordDto;
 import cn.szzsi.util.HuanxinUtil;
 import com.jfinal.plugin.activerecord.Model;
 
@@ -42,5 +43,10 @@ public class Customer extends Model<Customer>{
 
     public static final List<Customer> getListByLocation(Integer location){
         return dao.find("select * from customer where location=?",location);
+    }
+
+    public void changeIntegral(IntegralRecordDto dto){
+
+
     }
 }

@@ -54,6 +54,7 @@ create table consulter_order
    status               int not null comment '0 未接 1 以接 2 转接中',
    server_status        int not null comment '0 未结束 1 结束',
    create_time          bigint(20) not null,
+   ack_time             bigint(20),
    primary key (id)
 )
 DEFAULT CHARSET=utf8;

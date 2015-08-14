@@ -1,6 +1,7 @@
 package cn.szzsi.controller;
 
 import cn.szzsi.dto.ConsulterDto;
+import cn.szzsi.dto.IntegralRecordDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.dto.OrderDto;
 import cn.szzsi.intercept.Require;
@@ -74,6 +75,10 @@ public class OrderController extends ApiController{
         Integer customerId = SessionUtil.getCustomerId(this);
         if(customerId.equals(order.getInt("customer_id"))){
             Message message = Message.createCustomerMessage(order,content);
+            if(order.isFirstAck()){
+                Customer customer = order.getCustomer();
+                customer.changeIntegral(new IntegralRecordDto(order));
+            }
             Consulter consulter = order.getConsulter();
             CustomApi.sendMsg(consulter,message);
             renderJson(Msg.SUCCESS);
