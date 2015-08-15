@@ -70,34 +70,34 @@ public class WeixinApiController extends ApiController{
     /**
      * 发送模板消息
      */
-    public void sendMsg(){
-        String str = " {\n" +
-                "           \"touser\":\"ohbweuNYB_heu_buiBWZtwgi4xzU\",\n" +
-                "           \"template_id\":\"9SIa8ph1403NEM3qk3z9-go-p4kBMeh-HGepQZVdA7w\",\n" +
-                "           \"url\":\"http://www.sina.com\",\n" +
-                "           \"topcolor\":\"#FF0000\",\n" +
-                "           \"data\":{\n" +
-                "                   \"first\": {\n" +
-                "                       \"value\":\"恭喜你购买成功！\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"keyword1\":{\n" +
-                "                       \"value\":\"去哪儿网发的酒店红包（1个）\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"keyword2\":{\n" +
-                "                       \"value\":\"1元\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"remark\":{\n" +
-                "                       \"value\":\"欢迎再次购买！\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   }\n" +
-                "           }\n" +
-                "       }";
-        ApiResult apiResult = TemplateMsgApi.send(str);
-        renderText(apiResult.getJson());
-    }
+//    public void sendMsg(){
+//        String str = " {\n" +
+//                "           \"touser\":\"ohbweuNYB_heu_buiBWZtwgi4xzU\",\n" +
+//                "           \"template_id\":\"9SIa8ph1403NEM3qk3z9-go-p4kBMeh-HGepQZVdA7w\",\n" +
+//                "           \"url\":\"http://www.sina.com\",\n" +
+//                "           \"topcolor\":\"#FF0000\",\n" +
+//                "           \"data\":{\n" +
+//                "                   \"first\": {\n" +
+//                "                       \"value\":\"恭喜你购买成功！\",\n" +
+//                "                       \"color\":\"#173177\"\n" +
+//                "                   },\n" +
+//                "                   \"keyword1\":{\n" +
+//                "                       \"value\":\"去哪儿网发的酒店红包（1个）\",\n" +
+//                "                       \"color\":\"#173177\"\n" +
+//                "                   },\n" +
+//                "                   \"keyword2\":{\n" +
+//                "                       \"value\":\"1元\",\n" +
+//                "                       \"color\":\"#173177\"\n" +
+//                "                   },\n" +
+//                "                   \"remark\":{\n" +
+//                "                       \"value\":\"欢迎再次购买！\",\n" +
+//                "                       \"color\":\"#173177\"\n" +
+//                "                   }\n" +
+//                "           }\n" +
+//                "       }";
+//        ApiResult apiResult = TemplateMsgApi.send(str);
+//        renderText(apiResult.getJson());
+//    }
 
     /**
      * 获取参数二维码

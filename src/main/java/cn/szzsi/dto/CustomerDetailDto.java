@@ -1,6 +1,8 @@
 package cn.szzsi.dto;
 
 import cn.szzsi.model.Customer;
+import cn.szzsi.util.PathUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Yishe on 8/15/2015.
@@ -85,6 +87,9 @@ public class CustomerDetailDto{
     }
 
     public String getHeadurl(){
+        if(StringUtils.isBlank(headurl)){
+            return PathUtil.getDefaultHeadUrl();
+        }
         return headurl;
     }
 

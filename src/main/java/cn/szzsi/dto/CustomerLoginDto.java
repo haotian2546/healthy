@@ -13,6 +13,7 @@ public class CustomerLoginDto{
     private String nickname;
     private String headurl;
     private int location;
+    private String token;
     private String chatid;
     private String chatpd;
 
@@ -24,6 +25,7 @@ public class CustomerLoginDto{
         this.location = customer.getInt("location");
         this.chatid = customer.getStr("username");
         this.chatpd = customer.getStr("chatpd");
+        this.token = customer.getStr("token");
     }
 
     public int getId(){
@@ -47,6 +49,14 @@ public class CustomerLoginDto{
             return PathUtil.getDefaultHeadUrl();
         }
         return headurl;
+    }
+
+    public String getToken(){
+        return token;
+    }
+
+    public void setToken(String token){
+        this.token = token;
     }
 
     public void setHeadurl(String headurl){

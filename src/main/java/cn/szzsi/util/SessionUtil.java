@@ -47,7 +47,11 @@ public class SessionUtil implements HttpSessionListener{
     }
 
     public static final void loginCustomer(Customer customer){
-        String token = getToken(customer.getStr("username"),customer.getStr("password"));
+        String token = customer.getStr("token");
+        if(StringUtils.isNoneBlank(token)){
+            map.remove(token);
+        }
+        token = getToken(customer.getStr("username"),customer.getStr("password"));
         customer.set("token",token).update();
         map.put(token,customer);
     }
@@ -60,8 +64,10 @@ public class SessionUtil implements HttpSessionListener{
 
     public static final void setOnline(Controller c){
         Integer cid = getCustomerId(c);
-        c.setSessionAttr(CUS_ATTR_NAME,cid);
-        online.add(cid);
+        if(!isOnline(cid)){
+            c.setSessionAttr(CUS_ATTR_NAME,cid);
+            online.add(cid);
+        }
     }
 
     public static final boolean isOnline(Integer conId){

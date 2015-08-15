@@ -15,6 +15,7 @@ public class AuthInterceptor implements Interceptor{
     public void intercept(Invocation ai){
         Controller c = ai.getController();
         if(SessionUtil.isLogin(c)){
+            SessionUtil.setOnline(c);
             ai.invoke();
         }else{
             c.renderError(HttpServletResponse.SC_FORBIDDEN);
