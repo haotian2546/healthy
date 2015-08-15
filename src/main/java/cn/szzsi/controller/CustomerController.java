@@ -1,9 +1,6 @@
 package cn.szzsi.controller;
 
-import cn.szzsi.dto.CustomerDto;
-import cn.szzsi.dto.CustomerLoginDto;
-import cn.szzsi.dto.Msg;
-import cn.szzsi.dto.OrderDto;
+import cn.szzsi.dto.*;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.intercept.Require;
 import cn.szzsi.model.Consulter;
@@ -14,6 +11,7 @@ import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.log.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +58,43 @@ public class CustomerController extends Controller{
             renderJson(Msg.fail(1,"用户名或密码错误"));
         }
     }
+
+    public void detail(){
+        Customer customer = SessionUtil.getCustomer(this);
+        if("GET".equalsIgnoreCase(getRequest().getMethod())) {
+            CustomerDetailDto dto = new CustomerDetailDto(customer);
+            renderJson(Msg.success(dto));
+        }else{
+            String nickname = getPara("nickname");
+            if(StringUtils.isNotBlank(nickname)){
+                customer.set("nickname",nickname);
+            }
+            String headurl = getPara("headurl");
+            if(StringUtils.isNotBlank(headurl)){
+                customer.set("headurl",headurl);
+            }
+            Integer location = getParaToInt("location");
+            if(location != null){
+                customer.set("location",location);
+            }
+            String company = getPara("company");
+            if(StringUtils.isNotBlank(company)){
+                customer.set("company",company);
+            }
+            String department = getPara("department");
+            if(StringUtils.isNotBlank(department)){
+                customer.set("department",department);
+            }
+            String memo = getPara("memo");
+            if(StringUtils.isNotBlank(memo)){
+                customer.set("memo",memo);
+            }
+            customer.update();
+            renderJson(Msg.SUCCESS);
+        }
+
+    }
+
 
     @Require("password")
     public void changepd(){
