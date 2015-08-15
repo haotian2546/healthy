@@ -9,6 +9,7 @@ import cn.szzsi.intercept.Require;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Order;
+import cn.szzsi.util.MD5Util;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
@@ -23,6 +24,7 @@ import java.util.List;
 public class CustomerController extends Controller{
 
     private static final Logger logger = Logger.getLogger(CustomerController.class);
+
     /**
      * 医生注册
      */
@@ -51,12 +53,25 @@ public class CustomerController extends Controller{
         String username = getPara("username");
         String password = getPara("password");
         Customer customer = Customer.getByUsername(username);
-        if(customer == null || !customer.getStr("password").equals(password)){
-            renderJson(Msg.fail(1,"用户名或密码错误"));
-        }else{
+        if(customer != null && ( customer.getStr("password").equals(MD5Util.crypt(password,username)) || customer.getStr("password").equals(password) )){
             SessionUtil.setCustomer(this,customer);
             renderJson(Msg.success(new CustomerLoginDto(customer)));
+        }else{
+            renderJson(Msg.fail(1,"用户名或密码错误"));
         }
+    }
+
+    @Require("password")
+    public void changepd(){
+        String pwd = getPara("password");
+        Customer cur = SessionUtil.getCustomer(this);
+        cur.set("password",MD5Util.crypt(pwd,cur.getStr("username"))).update();
+        renderJson(Msg.SUCCESS);
+    }
+
+    public void logout(){
+        getSession().invalidate();
+        renderJson(Msg.SUCCESS);
     }
 
     @Require("status:^[1,2]$")
@@ -70,7 +85,7 @@ public class CustomerController extends Controller{
             orders = Order.getForwardingOrderByCusId(cusId);
         }
         List<OrderDto> dtoList = new ArrayList<>();
-        for(Order order:orders){
+        for(Order order : orders){
             Consulter consulter = Consulter.dao.findById(order.getInt("consulter_id"));
             OrderDto temp = new OrderDto(order,consulter);
             dtoList.add(temp);
@@ -89,5 +104,4 @@ public class CustomerController extends Controller{
         }
         renderJson(Msg.success(dtos));
     }
-
 }

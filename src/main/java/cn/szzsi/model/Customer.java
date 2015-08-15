@@ -2,6 +2,7 @@ package cn.szzsi.model;
 
 import cn.szzsi.dto.IntegralRecordDto;
 import cn.szzsi.util.HuanxinUtil;
+import cn.szzsi.util.MD5Util;
 import com.jfinal.plugin.activerecord.Model;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class Customer extends Model<Customer>{
             if(!isExist(username)){
                 temp = new Customer();
                 temp.set("username",username);
-                temp.set("password",password);
+                temp.set("password",MD5Util.crypt(password,username));
                 temp.set("nickname",nickname);
                 temp.set("location",location);
                 temp.set("integral",0);
