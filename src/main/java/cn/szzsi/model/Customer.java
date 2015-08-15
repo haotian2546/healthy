@@ -51,4 +51,8 @@ public class Customer extends Model<Customer>{
 
 
     }
+
+    public static final Customer getByToken(String token){
+        return dao.findFirst("select * from customer where token=?",token);
+    }
 }

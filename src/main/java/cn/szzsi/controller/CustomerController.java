@@ -52,7 +52,7 @@ public class CustomerController extends Controller{
         String password = getPara("password");
         Customer customer = Customer.getByUsername(username);
         if(customer != null && ( customer.getStr("password").equals(MD5Util.crypt(password,username)) || customer.getStr("password").equals(password) )){
-            SessionUtil.setCustomer(this,customer);
+            SessionUtil.loginCustomer(customer);
             renderJson(Msg.success(new CustomerLoginDto(customer)));
         }else{
             renderJson(Msg.fail(1,"用户名或密码错误"));
@@ -105,6 +105,8 @@ public class CustomerController extends Controller{
     }
 
     public void logout(){
+        Customer customer = SessionUtil.getCustomer(this);
+        SessionUtil.logoutCustomer(customer);
         getSession().invalidate();
         renderJson(Msg.SUCCESS);
     }

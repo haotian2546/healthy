@@ -12,7 +12,7 @@ public class CustomerDetailDto{
     private String headurl;
     private String company;
     private String department;
-    private int integral;
+    private long integral;
     private String memo;
     private int location;
 
@@ -25,7 +25,7 @@ public class CustomerDetailDto{
         this.company = customer.getStr("company");
         this.department = customer.getStr("department");
         this.memo = customer.getStr("memo");
-        this.integral = customer.getInt("integral");
+        this.integral = customer.getLong("integral");
     }
 
     public String getCompany(){
@@ -44,11 +44,11 @@ public class CustomerDetailDto{
         this.department = department;
     }
 
-    public int getIntegral(){
+    public long getIntegral(){
         return integral;
     }
 
-    public void setIntegral(int integral){
+    public void setIntegral(long integral){
         this.integral = integral;
     }
 
