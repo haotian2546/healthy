@@ -28,6 +28,7 @@ public class Customer extends Model<Customer>{
                 temp = new Customer();
                 temp.set("username",username);
                 temp.set("password",MD5Util.crypt(password,username));
+                temp.set("chatpd",MD5Util.crypt(password,username));
                 temp.set("nickname",nickname);
                 temp.set("location",location);
                 temp.set("integral",0);

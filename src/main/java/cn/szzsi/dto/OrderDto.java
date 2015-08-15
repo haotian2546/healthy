@@ -3,6 +3,8 @@ package cn.szzsi.dto;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
+import cn.szzsi.util.PathUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Yishe on 8/7/2015.
@@ -41,6 +43,9 @@ public class OrderDto{
     }
 
     public String getHeadurl(){
+        if(StringUtils.isBlank(headurl)){
+            return PathUtil.getDefaultHeadUrl();
+        }
         return headurl;
     }
 

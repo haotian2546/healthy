@@ -1,6 +1,7 @@
 package cn.szzsi.dto;
 
 import cn.szzsi.model.Customer;
+import cn.szzsi.util.SessionUtil;
 
 /**
  * Created by Yishe on 8/13/2015.
@@ -17,6 +18,7 @@ public class CustomerDto{
         this.username = customer.getStr("username");
         this.nickname = customer.getStr("nickname");
         this.location = customer.getInt("location");
+        this.isOnline = SessionUtil.isOnline(id)?1:0;
     }
 
     public int getId(){

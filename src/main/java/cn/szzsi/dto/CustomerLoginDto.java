@@ -1,6 +1,8 @@
 package cn.szzsi.dto;
 
 import cn.szzsi.model.Customer;
+import cn.szzsi.util.PathUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Yishe on 8/7/2015.
@@ -9,6 +11,7 @@ public class CustomerLoginDto{
     private int id;
     private String username;
     private String nickname;
+    private String headurl;
     private int location;
     private String chatid;
     private String chatpd;
@@ -17,9 +20,10 @@ public class CustomerLoginDto{
         this.id = customer.getInt("id");
         this.username = customer.getStr("username");
         this.nickname = customer.getStr("nickname");
+        this.headurl = customer.getStr("headurl");
         this.location = customer.getInt("location");
         this.chatid = customer.getStr("username");
-        this.chatpd = customer.getStr("password");
+        this.chatpd = customer.getStr("chatpd");
     }
 
     public int getId(){
@@ -36,6 +40,17 @@ public class CustomerLoginDto{
 
     public void setUsername(String username){
         this.username = username;
+    }
+
+    public String getHeadurl(){
+        if(StringUtils.isBlank(headurl)){
+            return PathUtil.getDefaultHeadUrl();
+        }
+        return headurl;
+    }
+
+    public void setHeadurl(String headurl){
+        this.headurl = headurl;
     }
 
     public String getNickname(){

@@ -44,7 +44,7 @@ public class HuanxinUtil{
         Map<String,String> head = new HashMap<>();
         head.put("Content-Type","application/json");
         head.put("Authorization","Bearer "+getToken());
-        String json = "{\"username\":\""+customer.getStr("username")+"\",\"password\":\""+customer.getStr("password")+"\"}";
+        String json = "{\"username\":\""+customer.getStr("username")+"\",\"password\":\""+customer.getStr("chatpd")+"\"}";
         String data = HttpKit.post(WEB_PRE +String.format("/%s/%s/users",ORG_NAME,APP_NAME),json,head);
         if(logger.isDebugEnabled()){
             logger.debug("环信:注册用户\n"+data);
@@ -65,6 +65,8 @@ public class HuanxinUtil{
     }
 
     public static final void noticeNewOrder(Order order){
+
+
 
 
     }

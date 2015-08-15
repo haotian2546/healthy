@@ -3,9 +3,7 @@ package cn.szzsi.util;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Message;
 import cn.szzsi.model.Order;
-import com.jfinal.core.JFinal;
 import com.jfinal.kit.HttpKit;
-import com.jfinal.kit.PropKit;
 import com.jfinal.log.Logger;
 import com.jfinal.weixin.sdk.api.AccessTokenApi;
 import org.apache.commons.codec.digest.Md5Crypt;
@@ -34,8 +32,8 @@ public class CustomApi{
     }
 
     public static final void evaluate(Order order){
-        String url = PropKit.get("web.url") + JFinal.me().getContextPath() + "/wx/evaluation?id=" +order.getInt("id");
-        String content = "点击 <a href=\\\""+url+"\\\">这里</a> 对本次服务进行评价";
+        String path = "/wx/evaluation?id=" +order.getInt("id");
+        String content = "点击 <a href=\\\""+PathUtil.getPath(path)+"\\\">这里</a> 对本次服务进行评价";
         Consulter consulter = order.getConsulter();
         sendMsg(consulter.getStr("openid"),content);
     }
