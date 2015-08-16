@@ -36,6 +36,7 @@ public class JFWebConfig extends JFinalConfig{
         me.add("/cus",CustomerController.class);
         me.add("/order",OrderController.class);
         me.add("/wx",WeixinController.class);
+        me.add("/location",LocationController.class);
     }
 
     public void configPlugin(Plugins me){
@@ -49,6 +50,7 @@ public class JFWebConfig extends JFinalConfig{
         arp.addMapping("customer",Customer.class);
         arp.addMapping("message",Message.class);
         arp.addMapping("integral_record",IntegralRecord.class);
+        arp.addMapping("location",Location.class);
     }
 
     public void configInterceptor(Interceptors me){
