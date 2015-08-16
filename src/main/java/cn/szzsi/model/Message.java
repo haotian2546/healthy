@@ -46,10 +46,11 @@ public class Message extends Model<Message>{
 
     public static final Page<Message> getPage(int pageNo,int pageSize,int orderId,Long time){
         StringBuilder sql = new StringBuilder();
-        sql.append("from message where order_id=? ");
+        sql.append("from message where order_id=?");
         if(time != null){
-            sql.append("and create_time<=").append(time.longValue());
+            sql.append(" and create_time<=").append(time.longValue());
         }
+        sql.append(" order by create_time desc");
         return dao.paginate(pageNo,pageSize,"select * ",sql.toString(),orderId);
     }
 
