@@ -1,5 +1,6 @@
 package cn.szzsi.controller;
 
+import cn.szzsi.dto.ConsulterDto;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.intercept.Require;
 import cn.szzsi.intercept.WeixinInterceptor;
@@ -12,6 +13,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import com.jfinal.weixin.sdk.jfinal.ApiController;
+import com.jfinal.weixin.sdk.jfinal.ApiInterceptor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +21,10 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Yishe on 8/13/2015.
  */
+@Before(WeixinInterceptor.class)
 public class WeixinController extends ApiController{
+
+    private static final String OPENID_KEY = "_openid_";
 
     public ApiConfig getApiConfig(){
         return SessionUtil.getApiConfig(this);
@@ -35,29 +40,39 @@ public class WeixinController extends ApiController{
         }
     }
 
-    @Before(WeixinInterceptor.class)
+    @Clear(AuthInterceptor.class)
+    public void course(){
+
+    }
+
+    @Clear(AuthInterceptor.class)
+    @Before(ApiInterceptor.class)
     public void index(){
-        String code = getPara("code");
-        if(StringUtils.isBlank(code)){
-            String cur = PathUtil.getPath("/wx/index");
-            try{
-                String url = OAuthApi.getRedirectUrl(cur,"");
-                redirect(url);
-            }catch(UnsupportedEncodingException e){
-                renderError(404);
+        String openid = getSessionAttr(OPENID_KEY);
+        if(StringUtils.isBlank(openid)){
+            String code = getPara("code");
+            if(StringUtils.isBlank(code)){
+                String cur = PathUtil.getPath("/wx/index");
+                try{
+                    String url = OAuthApi.getRedirectUrl(cur,"");
+                    redirect(url);
+                }catch(UnsupportedEncodingException e){
+                    renderError(404);
+                }
+                return;
             }
-            return;
+            openid = OAuthApi.getOpenId(code);
+            setSessionAttr(OPENID_KEY,openid);
         }
-        String openid = OAuthApi.getOpenId(code);
         Consulter consulter = Consulter.getByOpenId(openid);
         if(consulter == null){
             renderError(404);
             return;
         }
-        setAttr("consulter",consulter);
+        setAttr("consulter",new ConsulterDto(consulter));
     }
 
-    @Before(WeixinInterceptor.class)
+    @Clear(AuthInterceptor.class)
     @Require("openid")
     public void edit(){
         String openid = getPara("openid");
@@ -67,8 +82,21 @@ public class WeixinController extends ApiController{
             return;
         }
         if("GET".equalsIgnoreCase(getRequest().getMethod())){
-            setAttr("consulter",consulter);
+            setAttr("consulter",new ConsulterDto(consulter));
         }else{
+            Integer location = getParaToInt("location");
+            if(location != null){
+                consulter.set("location",location);
+            }
+            String address = getPara("address");
+            if(address != null){
+                consulter.set("address",address);
+            }
+            String phone = getPara("phone");
+            int childsex = getParaToInt("childsex");
+            int childname = getParaToInt("childname");
+            Long childbirth = getParaToLong("childbirth");
+
 
         }
     }

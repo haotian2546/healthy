@@ -10,26 +10,17 @@ public class Consulter extends Model<Consulter>{
     public static final Consulter dao = new Consulter();
 
     public static final Consulter getByOpenId(String openid){
-        Consulter user = dao.findFirst("select * from consulter where openid=?",openid);
-        if(user == null){
-            user = regesterByOpenid(openid);
-        }
-        return user;
+        return dao.findFirst("select * from consulter where openid=?",openid);
     }
 
-    private static final Consulter regesterByOpenid(String openid){
+    public static final Consulter regesterByOpenid(String openid){
         Consulter user = null;
         synchronized(Consulter.class){
             user = dao.findFirst("select * from consulter where openid=?",openid);
             if(user == null){
                 user = new Consulter();
-                user.set("username",openid);
-                user.set("password",openid);
-                user.set("openid",openid);
-                user.set("nickname",openid);
-                user.set("location",0);
-                user.set("childsex",0);
-                user.save();
+                user.set("username",openid).set("password",openid).set("openid",openid).set("nickname",openid);
+                user.set("location",0).set("childsex",0).save();
             }
         }
         return user;

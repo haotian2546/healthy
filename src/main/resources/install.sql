@@ -32,6 +32,7 @@ create table consulter
    nickname             varchar(256) not null comment '昵称',
    headurl              varchar(256) comment '头像',
    location             int not null comment '地区',
+   address              varchar(256) comment '详细地址',
    childsex             int not null comment '宝宝性别  0未知 1男孩 2女孩',
    childname            varchar(256) comment '宝宝姓名',
    childbirth           bigint(20) comment '宝宝生日',

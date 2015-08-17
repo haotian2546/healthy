@@ -9,23 +9,27 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ConsulterDto{
     private int id;
+    private String openid;
     private String nickname;
     private String username;
     private String headurl;
     private int childsex;
     private String childname;
     private String phone;
+    private String address;
     private Long childbirth;
     private long lastAskTime;
 
     public ConsulterDto(Consulter consulter){
         this.id = consulter.getInt("id");
+        this.openid = consulter.getStr("openid");
         this.nickname = consulter.getStr("nickname");
         this.username = consulter.getStr("username");
         this.headurl = consulter.getStr("headurl");
         this.childsex = consulter.getInt("childsex");
         this.childname = consulter.getStr("childname");
         this.phone = consulter.getStr("phone");
+        this.address = consulter.getStr("address");
         this.childbirth = consulter.getLong("childbirth");
 //        this.lastAskTime = consulter.getLong("lastAskTime");
     }
@@ -95,5 +99,29 @@ public class ConsulterDto{
 
     public void setLastAskTime(long lastAskTime){
         this.lastAskTime = lastAskTime;
+    }
+
+    public String getPhone(){
+        return phone;
+    }
+
+    public void setPhone(String phone){
+        this.phone = phone;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+    public String getOpenid(){
+        return openid;
+    }
+
+    public void setOpenid(String openid){
+        this.openid = openid;
     }
 }

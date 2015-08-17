@@ -28,19 +28,19 @@ public class WeixinApiController extends ApiController{
         String str = "{\n" +
                 "    \"button\": [\n" +
                 "        {\n" +
-                "            \"name\": \"进入理财\",\n" +
-                "            \"url\": \"http://m.bajie8.com/bajie/enter\",\n" +
+                "            \"name\": \"我要问\",\n" +
+                "            \"key\": \"我有一个问题\",\n" +
+                "            \"type\": \"click\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"name\": \"育儿教程\",\n" +
+                "            \"url\": \"http://139.196.16.8/wx/course\",\n" +
                 "            \"type\": \"view\"\n" +
                 "        },\n" +
                 "        {\n" +
-                "            \"name\": \"安全保障\",\n" +
-                "            \"key\": \"112\",\n" +
-                "\t    \"type\": \"click\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "\t    \"name\": \"使用帮助\",\n" +
-                "\t    \"url\": \"http://m.bajie8.com/footer/cjwt\",\n" +
-                "\t    \"type\": \"view\"\n" +
+                "            \"name\": \"个人中心\",\n" +
+                "            \"url\": \"http://139.196.16.8/wx/index\",\n" +
+                "            \"type\": \"view\"\n" +
                 "        }\n" +
                 "    ]\n" +
                 "}";

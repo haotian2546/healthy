@@ -42,6 +42,13 @@ public class WeixinMsgController extends MsgController{
 
     protected void processInTextMsg(InTextMsg inTextMsg){
         Consulter consulter = Consulter.getByOpenId(inTextMsg.getFromUserName());
+        if(consulter == null){
+            consulter = Consulter.regesterByOpenid(inTextMsg.getFromUserName());
+            ApiResult apiResult = UserApi.getUserInfo(inTextMsg.getFromUserName());
+            if(apiResult.getInt("subscribe") == 1){
+                consulter.update(apiResult);
+            }
+        }
         Order order = Order.getServeringOrderByConId(consulter.getInt("id"));
         Message message = Message.createConsulterMessage(order,inTextMsg.getContent());
         Customer customer = order.getCustomer();
@@ -108,6 +115,9 @@ public class WeixinMsgController extends MsgController{
             outMsg.setContent("欢迎关注医疗咨询公众平台");
             render(outMsg);
             Consulter consulter = Consulter.getByOpenId(inFollowEvent.getFromUserName());
+            if(consulter == null){
+                consulter = Consulter.regesterByOpenid(inFollowEvent.getFromUserName());
+            }
             ApiResult apiResult = UserApi.getUserInfo(inFollowEvent.getFromUserName());
             if(apiResult.getInt("subscribe") == 1){
                 consulter.update(apiResult);
