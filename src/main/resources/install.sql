@@ -88,6 +88,7 @@ create table customer
    integral             bigint not null default 0,
    company              varchar(256),
    department           varchar(256),
+   token                varchar(256),
    memo                 text,
    service_times       int not null default 0,
    primary key (id)

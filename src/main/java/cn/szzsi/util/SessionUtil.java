@@ -3,26 +3,32 @@ package cn.szzsi.util;
 import cn.szzsi.model.Customer;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.ehcache.CacheKit;
 import com.jfinal.weixin.sdk.api.ApiConfig;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 import java.security.MessageDigest;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Yishe on 8/7/2015.
  */
-public class SessionUtil implements HttpSessionListener{
-    private static final String CUS_ATTR_NAME = "_cus_attr_name_";
+public class SessionUtil{
+    private static ApiConfig CONFIG;
 
-    private static final Map<String,Customer> map = new ConcurrentHashMap<String,Customer>();
+    private static final String ONLINE_CACHE_NAME = "_online_cache_";
 
-    private static final Set<Integer> online = new TreeSet<Integer>();
+    public static final ApiConfig getApiConfig(Controller c){
+        if(CONFIG == null){
+            ApiConfig ac = new ApiConfig();
+            ac.setToken(PropKit.get("token"));
+            ac.setAppId(PropKit.get("appId"));
+            ac.setAppSecret(PropKit.get("appSecret"));
+            ac.setEncryptMessage(PropKit.getBoolean("encryptMessage",false));
+            ac.setEncodingAesKey(PropKit.get("encodingAesKey","setting it in config file"));
+            CONFIG = ac;
+        }
+        return CONFIG;
+    }
 
     public static final Integer getCustomerId(Controller c){
         Customer customer = getCustomer(c);
@@ -36,11 +42,11 @@ public class SessionUtil implements HttpSessionListener{
         if(StringUtils.isBlank(token)){
             return null;
         }
-        Customer customer = map.get(token);
+        Customer customer = CacheKit.get(ONLINE_CACHE_NAME,token);
         if(customer == null){
             customer = Customer.getByToken(token);
             if(customer != null){
-                map.put(token,customer);
+                CacheKit.put(ONLINE_CACHE_NAME,token,customer);
             }
         }
         return customer;
@@ -49,55 +55,42 @@ public class SessionUtil implements HttpSessionListener{
     public static final void loginCustomer(Customer customer){
         String token = customer.getStr("token");
         if(StringUtils.isNoneBlank(token)){
-            map.remove(token);
+            Customer temp = CacheKit.get(ONLINE_CACHE_NAME,token);
+            if(temp != null){
+                CacheKit.remove(ONLINE_CACHE_NAME,token);
+            }
         }
         token = getToken(customer.getStr("username"),customer.getStr("password"));
         customer.set("token",token).update();
-        map.put(token,customer);
+        CacheKit.put(ONLINE_CACHE_NAME,token,customer);
     }
 
     public static final void logoutCustomer(Customer customer){
         String token = customer.getStr("token");
         customer.set("token",null).update();
-        map.remove(token);
-    }
-
-    public static final void setOnline(Controller c){
-        Integer cid = getCustomerId(c);
-        if(!isOnline(cid)){
-            c.setSessionAttr(CUS_ATTR_NAME,cid);
-            online.add(cid);
+        if(StringUtils.isNoneBlank(token)){
+            Customer temp = CacheKit.get(ONLINE_CACHE_NAME,token);
+            if(temp != null){
+                CacheKit.remove(ONLINE_CACHE_NAME,token);
+            }
         }
     }
 
-    public static final boolean isOnline(Integer conId){
-        return online.contains(conId);
+    public static final boolean isOnline(Integer cusId){
+        Customer customer = Customer.dao.findById(cusId);
+        if(customer == null){
+            return false;
+        }
+        String token = customer.getStr("token");
+        if(StringUtils.isBlank(token)){
+            return false;
+        }
+        Object obj = CacheKit.get(ONLINE_CACHE_NAME,token);
+        return obj != null;
     }
 
     public static final boolean isLogin(Controller c){
         return getCustomer(c) != null;
-    }
-
-    public static final ApiConfig getApiConfig(Controller c){
-        ApiConfig ac = new ApiConfig();
-        ac.setToken(PropKit.get("token"));
-        ac.setAppId(PropKit.get("appId"));
-        ac.setAppSecret(PropKit.get("appSecret"));
-        ac.setEncryptMessage(PropKit.getBoolean("encryptMessage",false));
-        ac.setEncodingAesKey(PropKit.get("encodingAesKey","setting it in config file"));
-        return ac;
-    }
-
-    @Override
-    public void sessionCreated(HttpSessionEvent se){
-    }
-
-    @Override
-    public void sessionDestroyed(HttpSessionEvent se){
-        Integer cid = (Integer) se.getSession().getAttribute(CUS_ATTR_NAME);
-        if(cid != null){
-            online.remove(cid);
-        }
     }
 
     public static String getToken(String username,String password){

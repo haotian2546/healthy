@@ -10,11 +10,13 @@ import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.FreeMarkerRender;
 import com.jfinal.weixin.sdk.api.ApiConfigKit;
 import freemarker.template.TemplateModelException;
 
 public class JFWebConfig extends JFinalConfig{
+
     public void configConstant(Constants me){
         PropKit.use("config.properties");
         me.setDevMode(true);
@@ -31,7 +33,7 @@ public class JFWebConfig extends JFinalConfig{
 
     @Override
     public void configRoute(Routes me){
-        me.add("/msg", WeixinMsgController.class);
+        me.add("/msg",WeixinMsgController.class);
         me.add("/api",WeixinApiController.class);
         me.add("/cus",CustomerController.class);
         me.add("/order",OrderController.class);
@@ -40,8 +42,8 @@ public class JFWebConfig extends JFinalConfig{
     }
 
     public void configPlugin(Plugins me){
-        loadPropertyFile("config.properties");
-        C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbc.url"),PropKit.get("jdbc.username"), PropKit.get("jdbc.password"));
+        me.add(new EhCachePlugin());
+        C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbc.url"),PropKit.get("jdbc.username"),PropKit.get("jdbc.password"));
         me.add(c3p0Plugin);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
         me.add(arp);
@@ -60,10 +62,9 @@ public class JFWebConfig extends JFinalConfig{
     }
 
     public void configHandler(Handlers me){
-
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         JFinal.start("webapp",80,"/",5);
     }
 }
