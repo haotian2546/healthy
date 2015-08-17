@@ -38,6 +38,10 @@ public class CustomApi{
         sendMsg(consulter.getStr("openid"),content);
     }
 
+    public static final void afterEvaluate(){
+
+    }
+
     public static void main(String[] args) throws UnsupportedEncodingException{
         for(String s:"1,2,3,4,5,6,7,8,9".split(","))
         System.out.println(Md5Crypt.md5Crypt("123456".getBytes("UTF-8")));

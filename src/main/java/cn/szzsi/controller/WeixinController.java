@@ -1,6 +1,7 @@
 package cn.szzsi.controller;
 
 import cn.szzsi.dto.ConsulterDto;
+import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.intercept.Require;
 import cn.szzsi.intercept.WeixinInterceptor;
@@ -37,6 +38,7 @@ public class WeixinController extends ApiController{
         setAttr("id",id);
         Order order = Order.dao.findById(id);
         if("POST".equalsIgnoreCase(getRequest().getMethod())){
+
         }
     }
 
@@ -93,11 +95,23 @@ public class WeixinController extends ApiController{
                 consulter.set("address",address);
             }
             String phone = getPara("phone");
-            int childsex = getParaToInt("childsex");
-            int childname = getParaToInt("childname");
+            if(address != null){
+                consulter.set("phone",phone);
+            }
+            Integer childsex = getParaToInt("childsex");
+            if(childsex != null){
+                consulter.set("childsex",childsex);
+            }
+            String childname = getPara("childname");
+            if(childname != null){
+                consulter.set("childname",childname);
+            }
             Long childbirth = getParaToLong("childbirth");
-
-
+            if(childbirth != null){
+                consulter.set("childbirth",childbirth);
+            }
+            consulter.update();
+            renderJson(Msg.SUCCESS);
         }
     }
 

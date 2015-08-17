@@ -78,6 +78,7 @@ public class OrderController extends ApiController{
             if(order.isFirstAck()){
                 Customer customer = order.getCustomer();
                 customer.changeIntegral(new IntegralRecordDto(order));
+                order.set("ack_time",System.currentTimeMillis()).update();
             }
             Consulter consulter = order.getConsulter();
             CustomApi.sendMsg(consulter,message);

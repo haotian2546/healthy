@@ -48,8 +48,12 @@ public class Customer extends Model<Customer>{
     }
 
     public void changeIntegral(IntegralRecordDto dto){
-
-
+        synchronized(this){
+            IntegralRecord.createIntegralRecord(this,dto);
+            long cur = getLong("integral");
+            cur = cur + dto.getPoint();
+            set("integral",Long.valueOf(cur)).update();
+        }
     }
 
     public static final Customer getByToken(String token){
