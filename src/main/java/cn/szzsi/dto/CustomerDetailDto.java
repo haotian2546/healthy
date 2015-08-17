@@ -1,6 +1,7 @@
 package cn.szzsi.dto;
 
 import cn.szzsi.model.Customer;
+import cn.szzsi.model.Location;
 import cn.szzsi.util.PathUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,6 +18,7 @@ public class CustomerDetailDto{
     private long integral;
     private String memo;
     private int location;
+    private String locationName;
 
     public CustomerDetailDto(Customer customer){
         this.id = customer.getInt("id");
@@ -28,6 +30,8 @@ public class CustomerDetailDto{
         this.department = customer.getStr("department");
         this.memo = customer.getStr("memo");
         this.integral = customer.getLong("integral");
+        Location loc =Location.getByCode(location);
+        this.locationName = loc!=null?loc.getStr("name"):"";
     }
 
     public String getCompany(){
@@ -103,5 +107,13 @@ public class CustomerDetailDto{
 
     public void setLocation(int location){
         this.location = location;
+    }
+
+    public String getLocationName(){
+        return locationName;
+    }
+
+    public void setLocationName(String locationName){
+        this.locationName = locationName;
     }
 }

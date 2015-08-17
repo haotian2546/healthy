@@ -1,6 +1,7 @@
 package cn.szzsi.dto;
 
 import cn.szzsi.model.Customer;
+import cn.szzsi.model.Location;
 import cn.szzsi.util.SessionUtil;
 
 /**
@@ -11,6 +12,7 @@ public class CustomerDto{
     private String username;
     private String nickname;
     private int location;
+    private String locationName;
     private int isOnline;
 
     public CustomerDto(Customer customer){
@@ -18,6 +20,8 @@ public class CustomerDto{
         this.username = customer.getStr("username");
         this.nickname = customer.getStr("nickname");
         this.location = customer.getInt("location");
+        Location loc =Location.getByCode(location);
+        this.locationName = loc!=null?loc.getStr("name"):"";
         this.isOnline = SessionUtil.isOnline(id)?1:0;
     }
 
@@ -51,5 +55,13 @@ public class CustomerDto{
 
     public void setLocation(int location){
         this.location = location;
+    }
+
+    public String getLocationName(){
+        return locationName;
+    }
+
+    public void setLocationName(String locationName){
+        this.locationName = locationName;
     }
 }
