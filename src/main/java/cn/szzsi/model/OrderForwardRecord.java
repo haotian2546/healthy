@@ -19,6 +19,6 @@ public class OrderForwardRecord extends Model<OrderForwardRecord>{
     }
 
     public static final List<OrderForwardRecord> getRecordByCusId(int cusId){
-        return dao.find("select * from order_forward_record where sender_id=? or receiver_id=?",cusId,cusId);
+        return dao.find("select a.* from order_forward_record a left join consulter_order b on a.order_id=b.id where b.status=2 and (a.sender_id=? or a.receiver_id=?)",cusId,cusId);
     }
 }
