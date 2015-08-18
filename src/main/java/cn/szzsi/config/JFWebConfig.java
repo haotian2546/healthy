@@ -53,6 +53,8 @@ public class JFWebConfig extends JFinalConfig{
         arp.addMapping("message",Message.class);
         arp.addMapping("integral_record",IntegralRecord.class);
         arp.addMapping("location",Location.class);
+        arp.addMapping("evaluation",Evaluation.class);
+        arp.addMapping("order_forward_record",OrderForwardRecord.class);
     }
 
     public void configInterceptor(Interceptors me){

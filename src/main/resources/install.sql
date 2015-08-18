@@ -184,3 +184,14 @@ alter table integral_record add constraint FK_customer_integral foreign key (cus
 alter table message add constraint FK_order_message foreign key (order_id)
       references consulter_order (id) on delete restrict on update restrict;
 
+create table order_forward_record (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  order_id int(11) NOT NULL COMMENT '工单id',
+  sender_id int(11) NOT NULL COMMENT '转接人id',
+  receiver_id int(11) NOT NULL COMMENT '被转接人id',
+  create_time bigint(20) NOT NULL,
+  PRIMARY KEY (id)
+)
+default charset=utf8;
+alter table order_forward_record add constraint FK_order_forward foreign key (order_id) references consulter_order (id) on delete restrict on update restrict;
+alter table order_forward_record add constraint FK_customer_forward foreign key (sender_id,receiver_id) references customer (id) on delete restrict on update restrict;

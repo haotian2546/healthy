@@ -132,7 +132,7 @@ public class OrderController extends ApiController{
         }
     }
 
-    @Require("id:^\\d+$")
+    @Require({"id:^\\d+$","customer_id:^\\d+$"})
     public void forward(){
         Integer id = getParaToInt("id");
         Integer customer_id = getParaToInt("customer_id");
@@ -144,7 +144,7 @@ public class OrderController extends ApiController{
         Order order = Order.dao.findById(id);
         Integer customerId = SessionUtil.getCustomerId(this);
         if(customerId.equals(order.getInt("customer_id"))){
-            order.set("status",2).update();
+            order.forward(another);
             HuanxinUtil.forward(another,id);
             renderJson(Msg.SUCCESS);
         }else{

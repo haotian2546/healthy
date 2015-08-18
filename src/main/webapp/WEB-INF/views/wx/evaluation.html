@@ -16,13 +16,24 @@
     <!--评价-->
     <script type="text/javascript">
         function addComment(){
-            $.ajax({
-                url:'${ctx}/wx/evaluation',type:'post',data:{id:"${id}"},dataType:'json',success:function(data){
+            alert($("input[name='type']").val());
+            return;
+            $.post('${ctx}/wx/evaluation',{
+                id:"${id}",
+                type:"",
+                service_times:"",
+                service_attitude:"",
+                service_level:"",
+                content:""
+            },function(r){
+                if(r.success){
+
+                    location.reload(true);
                 }
-            })
+            });
         }
         $(function(){
-            $(document).on('mouseover','i[cjmark]',function(){
+            $(document).on('touchend','i[cjmark]',function(){
                 var num = $(this).index();
                 var pmark = $(this).parents('.revinp');
                 var mark = pmark.prevAll('input');
@@ -119,9 +130,9 @@
             <div class="evaluate">
                 <span class="revtit">综合评价</span>
                 <ul class="dowebok">
-                    <li><input type="radio" name="radio" data-labelauty="好评" checked></li>
-                    <li><input type="radio" name="radio" data-labelauty="中评"></li>
-                    <li><input type="radio" name="radio" data-labelauty="差评"></li>
+                    <li><input type="radio" name="type" value="0" data-labelauty="好评" checked></li>
+                    <li><input type="radio" name="type" value="1" data-labelauty="中评"></li>
+                    <li><input type="radio" name="type" value="2" data-labelauty="差评"></li>
                 </ul>
             </div>
         </div>
@@ -132,7 +143,7 @@
         </div>
     </div>
     <div class="wasaicenter">
-        <a href="#" class="meschange wasai">提交</a> <a href="#" class="meschange wasai">取消</a>
+        <a href="javascript:addComment();" class="meschange wasai">提交</a> <a href="#" class="meschange wasai">取消</a>
     </div>
 </section>
 </body>

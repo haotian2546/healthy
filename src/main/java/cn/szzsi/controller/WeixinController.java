@@ -4,7 +4,6 @@ import cn.szzsi.dto.ConsulterDto;
 import cn.szzsi.dto.Msg;
 import cn.szzsi.intercept.AuthInterceptor;
 import cn.szzsi.intercept.Require;
-import cn.szzsi.intercept.WeixinInterceptor;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Order;
 import cn.szzsi.util.OAuthApi;
@@ -22,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Yishe on 8/13/2015.
  */
-@Before(WeixinInterceptor.class)
+//@Before(WeixinInterceptor.class)
 public class WeixinController extends ApiController{
 
     private static final String OPENID_KEY = "_openid_";
@@ -38,6 +37,7 @@ public class WeixinController extends ApiController{
         setAttr("id",id);
         Order order = Order.dao.findById(id);
         if("POST".equalsIgnoreCase(getRequest().getMethod())){
+
 
         }
     }

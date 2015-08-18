@@ -6,6 +6,7 @@ import cn.szzsi.intercept.Require;
 import cn.szzsi.model.Consulter;
 import cn.szzsi.model.Customer;
 import cn.szzsi.model.Order;
+import cn.szzsi.model.OrderForwardRecord;
 import cn.szzsi.util.MD5Util;
 import cn.szzsi.util.SessionUtil;
 import com.jfinal.aop.Clear;
@@ -111,16 +112,28 @@ public class CustomerController extends Controller{
         renderJson(Msg.SUCCESS);
     }
 
-    @Require("status:^[1,2]$")
-    public void order(){
+//    @Require("status:^[1,2]$")
+//    public void order(){
+//        Integer cusId = SessionUtil.getCustomerId(this);
+//        Integer status = getParaToInt("status");
+//        List<Order> orders = null;
+//        if(1 == status){
+//            orders = Order.getServeringOrderByCusId(cusId);
+//        }else if(2 == status){
+//            orders = Order.getForwardingOrderByCusId(cusId);
+//        }
+//        List<OrderDto> dtoList = new ArrayList<>();
+//        for(Order order : orders){
+//            Consulter consulter = Consulter.dao.findById(order.getInt("consulter_id"));
+//            OrderDto temp = new OrderDto(order,consulter);
+//            dtoList.add(temp);
+//        }
+//        renderJson(Msg.success(dtoList));
+//    }
+
+    public void servering(){
         Integer cusId = SessionUtil.getCustomerId(this);
-        Integer status = getParaToInt("status");
-        List<Order> orders = null;
-        if(1 == status){
-            orders = Order.getServeringOrderByCusId(cusId);
-        }else if(2 == status){
-            orders = Order.getForwardingOrderByCusId(cusId);
-        }
+        List<Order> orders = Order.getServeringOrderByCusId(cusId);
         List<OrderDto> dtoList = new ArrayList<>();
         for(Order order : orders){
             Consulter consulter = Consulter.dao.findById(order.getInt("consulter_id"));
@@ -128,6 +141,24 @@ public class CustomerController extends Controller{
             dtoList.add(temp);
         }
         renderJson(Msg.success(dtoList));
+    }
+
+    public void forwarding(){
+        Integer cusId = SessionUtil.getCustomerId(this);
+        List<OrderForwardRecord> records = OrderForwardRecord.getRecordByCusId(cusId);
+        List<OrderForwardDto> dtos = new ArrayList<OrderForwardDto>();
+        for(OrderForwardRecord record:records){
+            Order order = Order.dao.findById(record.getInt("order_id"));
+            if(order == null || order.getInt("status") != 2){
+                continue;
+            }
+            Consulter consulter = Consulter.dao.findById(order.getInt("consulter_id"));
+            Customer sender = Customer.dao.findById(record.getInt("sender_id"));
+            Customer receiver = Customer.dao.findById(record.getInt("receiver_id"));
+            OrderForwardDto dto = new OrderForwardDto(cusId,order,consulter,sender,receiver);
+            dtos.add(dto);
+        }
+        renderJson(Msg.success(dtos));
     }
 
     @Require("location:^\\d+$")
